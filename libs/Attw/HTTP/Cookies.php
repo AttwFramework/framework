@@ -86,8 +86,7 @@ class Cookies
     /**
      * Verify if a cookie exists
      *
-     * @param string $name Cookie name
-     *
+     * @param string|array $name Cookie name
      * @return boolean
     */
     public function exists($name)
