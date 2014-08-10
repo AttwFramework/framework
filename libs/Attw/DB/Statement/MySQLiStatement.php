@@ -29,7 +29,7 @@ class MySQLiStatement implements StatementInterface
     /**
      * Prepared statement
      *
-     * @var \mysql_stmt
+     * @var \mysqli_stmt
     */
     private $stmt;
 
@@ -231,7 +231,7 @@ class MySQLiStatement implements StatementInterface
             case null:
                 if (is_null($this->standartFetchMode) || count($this->standartFetchMode) == 0 || !isset($this->standartFetchMode['type'])) {
                     while ($r = $result->fetch_array()) {
-                        $this->results[] = $r;
+                        $results[] = $r;
                     }
                 } else {
                     $results = (isset($this->standartFetchMode['param2'])) ? $this->fetchAll(
