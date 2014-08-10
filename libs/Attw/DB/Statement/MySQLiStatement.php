@@ -230,7 +230,7 @@ class MySQLiStatement implements StatementInterface
         switch ($type) {
             case null:
                 if (is_null($this->standartFetchMode) || count($this->standartFetchMode) == 0 || !isset($this->standartFetchMode['type'])) {
-                    while ($r = $result->fetch_array()) {
+                    while ($r = $this->result->fetch_array()) {
                         $results[] = $r;
                     }
                 } else {

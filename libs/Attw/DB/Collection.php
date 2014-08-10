@@ -58,7 +58,7 @@ class Collection
      * Attach a connector to colletion
      *
      * @param string $key identification to connection
-     * @param \Attw\DB\Connection\Connector\Config\ConnectorInterface $connector
+     * @param \Attw\DB\Connection\Connector\ConnectorInterface $connector
      * @throws \RuntimeException case param $key already exists
     */
     public function add($key, ConnectorInterface $connector)

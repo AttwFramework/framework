@@ -26,7 +26,7 @@ class MinSize extends AbstractSizeFileValidator
     */
     public function __construct($minSize)
     {
-        parent::__construct($maxSize);
+        parent::__construct($minSize);
         $this->exceptionMsg = sprintf('The file is smaller than you min size: %s', $this->size);
     }
 

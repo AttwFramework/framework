@@ -52,22 +52,22 @@ abstract class AbstractModel extends Object
         $dbcollection = DBCollection::getInstance();
 
         if ($dbcollection->exists('Default')) {
-        $connection = $dbcollection->get('Default');
+            $connection = $dbcollection->get('Default');
         } else {
-        throw new RuntimeException('Define a default connection in Configs class');
+            throw new RuntimeException('Define a default connection in Configs class');
         }
 
         $configs = Configs::getInstance();
         $sqlGenerators = $configs->get('SQLGenerators');
 
         if (!isset($sqlGenerators[ strtolower($connection->getDriver()) ])) {
-        throw new RuntimeException('SQL generator to this driver type not founded');
+            throw new RuntimeException('SQL generator to this driver type not founded');
         }
 
         $this->connection = $connection;
         $this->storage = new Storage($connection,
-        $sqlGenerators[ strtolower($connection->getDriver()) ]
-       );
+            $sqlGenerators[ strtolower($connection->getDriver()) ]
+        );
         $this->entity = new EntityStorage($this->storage);
     }
 }
