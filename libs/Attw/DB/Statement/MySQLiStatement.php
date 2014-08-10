@@ -156,7 +156,7 @@ class MySQLiStatement implements StatementInterface
         $this->verifyMySQLiErrorsAndThrowException();
 
         if (!$this->stmt->execute()) {
-            StatementException::mysqliStmtError($this->stmt->error, $this->stmt->code);
+            StatementException::mysqliStmtError($this->stmt->error, $this->stmt->errno);
         }
 
         $this->result = $this->stmt->get_result();
@@ -173,7 +173,7 @@ class MySQLiStatement implements StatementInterface
         if (!call_user_func_array(array($this->stmt, 'bind_param'), 
             $this->refValues(array_merge(array($typesString), $this->bindParam, $params)))
         ) {
-            StatementException::mysqliError($this->stmt->error, $this->stmt->code);
+            StatementException::mysqliError($this->stmt->error, $this->stmt->errno);
         }
     }
 
