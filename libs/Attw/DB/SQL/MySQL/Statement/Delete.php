@@ -30,7 +30,7 @@ class Delete extends AbstractStatement
     /**
      * Where clause to indicate some registry
      *
-     * @var \Attw\DB\SQL\Clause\Where
+     * @var \Attw\DB\SQL\MySQL\Clause\Where
     */
     private $where;
 
