@@ -13,6 +13,6 @@ use Attw\DB\SQL\MySQL\Operator\AbstractOperatorQuotes;
 
 class SimpleQuotes extends AbstractOperatorQuotes
 {
-	const OPERATOR "'";
+	const OPERATOR = "'";
 	protected $operator = "'";
 }
