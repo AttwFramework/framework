@@ -9,14 +9,12 @@
 
 namespace Attw\File\Validator;
 
-use Attw\File\Validator\AbstractFileValidator;
-use Attw\File\FileInterface;
-use \InvalidArgumentException;
+use Attw\File\Validator\AbstractValidatorInArray;
 
 /**
  * Check if the file have a valid extension
 */
-class Extension extends AbstractFileValidator
+class Extension extends AbstractValidatorInArray
 {
     protected $fileMethod = 'getExtension';
 

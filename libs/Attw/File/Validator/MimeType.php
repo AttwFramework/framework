@@ -9,10 +9,9 @@
 
 namespace Attw\File\Validator;
 
-use Attw\File\Validator\AbstractFileValidator;
-use Attw\File\FileInterface;
+use Attw\File\Validator\AbstractValidatorInArray;
 
-class MimeType extends AbstractFileValidator
+class MimeType extends AbstractValidatorInArray
 {
     /**
      * @var string
