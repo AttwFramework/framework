@@ -62,7 +62,7 @@ class Storage implements StorageInterface
 
         $stmt = $this->connector->getStatement($sql);
 
-        $stmt = $this->bindAllParams($dataValues);
+        $stmt = $this->bindAllParams($stmt, $dataValues);
 
         return $stmt;
     }
@@ -86,7 +86,7 @@ class Storage implements StorageInterface
 
         $stmt = $this->connector->getStatement($sql);
 
-        $stmt = $this->bindAllParams($whereValues);
+        $stmt = $this->bindAllParams($stmt, $whereValues);
 
         return $stmt;
     }
