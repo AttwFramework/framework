@@ -15,11 +15,9 @@ use Attw\File\FileInterface;
 class MimeType extends AbstractFileValidator
 {
     /**
-     * Array with valid types
-     *
-     * @var array
+     * @var string
     */
-    private $types;
+    protected $fileMethod = 'getMimeType';
 
     /**
      * Constructor
@@ -28,15 +26,10 @@ class MimeType extends AbstractFileValidator
     */
     public function __construct(array $types)
     {
-        $this->types = $types;
+        parent::__construct($types);
         $this->exceptionMsg = sprintf(
             'The type of file is invalid. Valid types: %s',
-            implode(', ', $this->types)
+            implode(', ', $types)
        );
-    }
-
-    protected function realValidation(FileInterface $file)
-    {
-        return in_array($file->getMimeType(), $this->types);
     }
 }

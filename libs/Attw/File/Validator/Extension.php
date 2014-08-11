@@ -18,30 +18,14 @@ use \InvalidArgumentException;
 */
 class Extension extends AbstractFileValidator
 {
-    /**
-     * Array with the valid extensions
-     *
-     * @var array
-    */
-    private $extensions;
+    protected $fileMethod = 'getExtension';
 
     public function __construct(array $extensions)
     {
-        $this->extensions = $extensions;
+        parent::__construct($extensions);
         $this->exceptionMsg = sprintf(
             'Invalid extension. The file must have an of these extensions: %s',
-            implode(', ', $this->extensions)
+            implode(', ', $extensions)
        );
-    }
-
-    /**
-     * The validation of file
-     *
-     * @param instanceof Attw\File\File $file
-     * @return boolean
-    */
-    protected function realValidation(FileInterface $file)
-    {
-        return in_array($file->getExtension(), $this->extensions);
     }
 }
