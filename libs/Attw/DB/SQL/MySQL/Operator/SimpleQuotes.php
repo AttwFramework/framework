@@ -9,7 +9,7 @@
 
 namespace Attw\DB\SQL\MySQL\Operator;
 
-use Attw\DB\SQL\AbstractOperatorQuotes;
+use Attw\DB\SQL\MySQL\Operator\AbstractOperatorQuotes;
 
 class SimpleQuotes extends AbstractOperatorQuotes
 {

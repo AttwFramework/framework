@@ -1,7 +1,7 @@
 <?php
 namespace Attw\DB\SQL\MySQL\Operator;
 
-use Attw\DB\SQL\MySQL\AbstractOperatorForTwoValues;
+use Attw\DB\SQL\MySQL\Operator\AbstractOperatorForTwoValues;
 
 abstract class AbstractOperatorThatAcceptArray extends AbstractOperatorForTwoValues
 {
@@ -21,7 +21,7 @@ abstract class AbstractOperatorThatAcceptArray extends AbstractOperatorForTwoVal
         $b = $this->b;
 
         if (is_array($a)) {
-            $this->sql = implode(' ' . $operator . ' ', $a);
+            $this->sql = implode(' ' . $this->operator . ' ', $a);
         } else {
             if (!is_null($b)) {
                 parent::constructSql();

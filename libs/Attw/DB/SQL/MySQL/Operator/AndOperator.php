@@ -9,8 +9,7 @@
 
 namespace Attw\DB\SQL\MySQL\Operator;
 
-use Attw\DB\SQL\AbstractOperatorThatAcceptArray;
-use \LogicException;
+use Attw\DB\SQL\MySQL\Operator\AbstractOperatorThatAcceptArray;
 
 class AndOperator extends AbstractOperatorThatAcceptArray
 {

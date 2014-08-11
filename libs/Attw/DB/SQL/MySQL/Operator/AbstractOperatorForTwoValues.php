@@ -1,7 +1,7 @@
 <?php
 namespace Attw\DB\SQL\MySQL\Operator;
 
-use Attw\DB\SQL\MySQL\AbstractOperator;
+use Attw\DB\SQL\AbstractOperator;
 
 abstract class AbstractOperatorForTwoValues extends AbstractOperator
 {
@@ -17,6 +17,6 @@ abstract class AbstractOperatorForTwoValues extends AbstractOperator
 
     protected function constructSql()
     {
-        $this->sql = sprintf('%s %s %s', $this->a, $this->operator $this->b);
+        $this->sql = sprintf('%s %s %s', $this->a, $this->operator, $this->b);
     }
 }

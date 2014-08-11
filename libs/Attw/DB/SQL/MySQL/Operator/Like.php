@@ -9,7 +9,7 @@
 
 namespace Attw\DB\SQL\MySQL\Operator;
 
-use Attw\DB\SQL\AbstractOperatorForTwoValues;
+use Attw\DB\SQL\MySQL\Operator\AbstractOperatorForTwoValues;
 
 class Like extends AbstractOperatorForTwoValues
 {
