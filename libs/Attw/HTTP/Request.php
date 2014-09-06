@@ -5,269 +5,319 @@
  * @author Gabriel Jacinto <gamjj74@hotmail.com>
  * @license MIT License
  * @link http://attwframework.github.io
-*/
+ */
 
 namespace Attw\HTTP;
 
-use Attw\HTTP\Request\RequestInterface;
-
 /**
  * Request handler
- *
- * @resource Get request methods: POST, QUERY, FILES, PUT, DELETE and AJAX
- * @resource Verify request type
- * @resource Send a request with cUrl extension
-*/
+ */
 class Request
 {
-    const POST_METHOD = 'POST';
-    const QUERY_METHOD = 'GET';
-    const FILES_METHOD = 'FILES';
-    const PUT_METHOD = 'PUT';
-    const DELETE_METHOD = 'DELETE';
-    const AJAX_METHOD = 'xmlhttprequest';
+	const POST_METHOD = 'POST';
+	const QUERY_METHOD = 'GET';
+	const FILES_METHOD = 'FILES';
+	const PUT_METHOD = 'PUT';
+	const DELETE_METHOD = 'DELETE';
+	const AJAX_METHOD = 'xmlhttprequest';
 
-    /**
-     * Querystrings
-     *
-     * @var array
-    */
-    private $query;
+	/**
+	 * Querystrings
+	 *
+	 * @var array
+	 */
+	private $query;
 
-    /**
-     * Posts
-     *
-     * @var array
-    */
-    private $post;
+	/**
+	 * Posts
+	 *
+	 * @var array
+	 */
+	private $post;
 
-    /**
-     * Files
-     *
-     * @var array
-    */
-    private $files;
+	/**
+	 * Files
+	 *
+	 * @var array
+	 */
+	private $files;
 
-    /**
-     * Server
-     *
-     * @var array
-    */
-    private $server;
+	/**
+	 * Server
+	 *
+	 * @var array
+	 */
+	private $server;
 
-    /**
-     * Request method
-     *
-     * @var string
-    */
-    private $method;
+	/**
+	 * Request method
+	 *
+	 * @var string
+	 */
+	private $method;
 
-    /**
-     * Constructor of Request
-     * Define teh variables
-    */
-    public function __construct(
-        array $query = array(),
-        array $post = array(),
-        array $files = array(),
-        array $server = array()
-   ) {
-        $this->query = (count($query) > 0) ? $query : $_GET;
-        $this->post = (count($post) > 0) ? $post : $_POST;
-        $this->files = (count($files) > 0) ? $files : $_FILES;
-        $this->server = (count($server) > 0) ? $server : $_SERVER;
-    }
+	/**
+	 * Constructor of Request
+	 * Define teh variables
+	 */
+	public function __construct(
+		array $query = array(),
+		array $post = array(),
+		array $files = array(),
+		array $server = array()
+	) {
+		$this->query = (count($query) > 0) ? $query : $_GET;
+		$this->post = (count($post) > 0) ? $post : $_POST;
+		$this->files = (count($files) > 0) ? $files : $_FILES;
+		$this->server = (count($server) > 0) ? $server : $_SERVER;
+	}
 
-    /**
-     * Get a querystring requet
-     *
-     * @param string $property
-     * @return mixed
-    */
-    public function query($property)
+	/**
+	 * Add a query string
+	 *
+	 * @param string|array $name
+	 * @param string|null  $value
+	 */
+	public function addQuery($name, $value = null)
     {
-        return $this->query[ $property ];
-    }
+		$this->addProperty('query', $name, $value);
+	}
 
-    /**
-     * Get a post requet
-     *
-     * @param string $property
-     * @return mixed
-    */
-    public function post($property)
+	/**
+	 * Add a post
+	 *
+	 * @param string|array $name
+	 * @param string|null  $value
+	 */
+	public function addPost($name, $value = null)
     {
-        return $this->post[ $property ];
-    }
+		$this->addProperty('post', $name, $value);
+	}
 
-    /**
-     * Get a server property
-     *
-     * @param string $property
-     * @return mixed
-    */
-    public function server($property)
+	/**
+	 * Add a file
+	 *
+	 * @param string|array $name
+	 * @param string|null  $value
+	 */
+	public function addFile($name, $value = null)
     {
-        return $this->server[ $property ];
-    }
+		$this->addProperty('files', $name, $value);
+	}
 
-    /**
-     * Get a file property
-     *
-     * @param string $property
-     * @return array
-    */
-    public function file($property)
+	/**
+	 * Add a server property
+	 *
+	 * @param string|array $name
+	 * @param string|null  $value
+	 */
+	public function addServer($name, $value = null)
     {
-        return $this->files[ $property ];
-    }
+		$this->addProperty('server', $name, $value);
+	}
 
-    /**
-     * Verify if request is a post request
-     *
-     * @return boolean
-    */
-    public function isPost()
+	/**
+	 * @param string|array $name
+	 * @param string|null  $value
+	 */
+	private function addProperty($property, $name, $value = null)
     {
-        return (strtoupper($this->getMethod()) === self::POST_METHOD);
-    }
+		if (is_array($name)) {
+			$this->{ $property} = array_merge($name, $this->query);
+		} else {
+			$this->{ $property} = array_merge($this->{ $property}, array($name => $value));
+		}
+	}
 
-    /**
-     * Verify if request is a put request
-     *
-     * @return boolean
-    */
-    public function isPut()
+	/**
+	 * Get a querystring requet
+	 *
+	 * @param string $property
+	 * @return mixed
+	 */
+	public function query($property = null)
     {
-        return (strtoupper($this->getMethod()) === self::PUT_METHOD);
-    }
+		return $property === null ? $this->query : $this->query[$property];
+	}
 
-    /**
-     * Verify if request is a delete request
-     *
-     * @return boolean
-    */
-    public function isDelete()
+	/**
+	 * Get a post request
+	 *
+	 * @param string $property
+	 * @return mixed
+	 */
+	public function post($property)
     {
-        return (strtoupper($this->getMethod()) === self::DELETE_METHOD);
-    }
+		return $this->post[$property];
+	}
 
-    /**
-     * Verify if request is a file request
-     *
-     * @return boolean
-    */
-    public function isFiles()
+	/**
+	 * Get a server property
+	 *
+	 * @param string $property
+	 * @return mixed
+	 */
+	public function server($property)
     {
-        return (strtoupper($this->getMethod()) === self::FILES_METHOD);
-    }
+		return $this->server[$property];
+	}
 
-    /**
-     * Verify if request is a querystring request
-     *
-     * @return boolean
-    */
-    public function isQuery()
+	/**
+	 * Get a file property
+	 *
+	 * @param string $property
+	 * @return array
+	 */
+	public function file($property)
     {
-        return (strtoupper($this->getMethod()) === self::QUERY_METHOD);
-    }
+		return $this->files[$property];
+	}
 
-    /**
-     * Verify if request is a ajax request
-     *
-     * @return boolean
-    */
-    public function isAjax()
+	/**
+	 * Verify if request is a post request
+	 *
+	 * @return boolean
+	 */
+	public function isPost()
     {
-        return ($this->issetServer('HTTP_X_REQUESTED_WITH')
-            && strtolower($this->server('HTTP_X_REQUESTED_WITH')) === self::AJAX_METHOD);
-    }
+		return (strtoupper($this->getMethod()) === self::POST_METHOD);
+	}
 
-    /**
-     * Verify if a post request exists
-     *
-     * @param string $property
-     * @return boolean
-    */
-    public function issetPost($property)
+	/**
+	 * Verify if request is a put request
+	 *
+	 * @return boolean
+	 */
+	public function isPut() {
+		return (strtoupper($this->getMethod()) === self::PUT_METHOD);
+	}
+
+	/**
+	 * Verify if request is a delete request
+	 *
+	 * @return boolean
+	 */
+	public function isDelete()
     {
-        return isset($this->post[ $property ]);
-    }
+		return (strtoupper($this->getMethod()) === self::DELETE_METHOD);
+	}
 
-    /**
-     * Verify if a querystring request exists
-     *
-     * @param string $property
-     * @return boolean
-    */
-    public function issetQuery($property)
+	/**
+	 * Verify if request is a file request
+	 *
+	 * @return boolean
+	 */
+	public function isFiles()
     {
-        return isset($this->query[ $property ]);
-    }
+		return (strtoupper($this->getMethod()) === self::FILES_METHOD);
+	}
 
-    /**
-     * Verify if a file request exists
-     *
-     * @param string $property
-     * @return boolean
-    */
-    public function issetFile($property)
+	/**
+	 * Verify if request is a querystring request
+	 *
+	 * @return boolean
+	 */
+	public function isQuery()
     {
-        return isset($this->files[ $property ]);
-    }
+		return (strtoupper($this->getMethod()) === self::QUERY_METHOD);
+	}
 
-    /**
-     * Verify if a server request exists
-     *
-     * @param string $property
-     * @return boolean
-    */
-    public function issetServer($property)
+	/**
+	 * Verify if request is a ajax request
+	 *
+	 * @return boolean
+	 */
+	public function isAjax()
     {
-        return isset($this->server[ $property ]);
-    }
+		return ($this->issetServer('HTTP_X_REQUESTED_WITH')
+			 && strtolower($this->server('HTTP_X_REQUESTED_WITH')) === self::AJAX_METHOD);
+	}
 
-    /**
-     * Get the requet method
-     *
-     * @return string
-    */
-    public function getMethod()
+	/**
+	 * Verify if a post request exists
+	 *
+	 * @param string $property
+	 * @return boolean
+	 */
+	public function issetPost($property)
     {
-        return ($this->issetServer('REQUEST_METHOD')) ? $this->server('REQUEST_METHOD') : false;
-    }
+		return isset($this->post[$property]);
+	}
 
-    /**
-     * Send a HTTP request
-     *
-     * @param string        $url
-     * @param array|string|null $params
-     * @param string|null       $header
-     * @param boolean       $ssl
-     * @param boolean       $post
-     * @return string
-    */
-    public function send($url, $params = null, $header = null, $ssl = false, $post = false)
+	/**
+	 * Verify if a querystring request exists
+	 *
+	 * @param string $property
+	 * @return boolean
+	 */
+	public function issetQuery($property)
     {
-        if (!$post) {
-            $url .= (is_array($params) && count($params) > 0) ? '?' . http_build_query($params) : $params;
-        }
+		return isset($this->query[$property]);
+	}
 
-        $ch = curl_init();
+	/**
+	 * Verify if a file request exists
+	 *
+	 * @param string $property
+	 * @return boolean
+	 */
+	public function issetFile($property)
+    {
+		return isset($this->files[$property]);
+	}
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        (is_null($header)) ?: curl_setopt($ch, CURLOPT_HTTPHEADER, $header) ;
-        curl_setopt($ch, CURLOPT_POST, $post);
-        (!$post) ?: curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $ssl);
+	/**
+	 * Verify if a server request exists
+	 *
+	 * @param string $property
+	 * @return boolean
+	 */
+	public function issetServer($property)
+    {
+		return isset($this->server[$property]);
+	}
 
-        $return = curl_exec($ch);
+	/**
+	 * Get the requet method
+	 *
+	 * @return string
+	 */
+	public function getMethod()
+    {
+		return ($this->issetServer('REQUEST_METHOD')) ? $this->server('REQUEST_METHOD') : false;
+	}
 
-        if (!$return) {
-            throw new RuntimeException('An error occurred with the request: ' . curl_error($ch));
-        }
+	/**
+	 * Send a HTTP request
+	 *
+	 * @param string        $url
+	 * @param array|string|null $params
+	 * @param string|null       $header
+	 * @param boolean       $ssl
+	 * @param boolean       $post
+	 * @return string
+	 */
+	public function send($url, $params = null, $header = null, $ssl = false, $post = false)
+    {
+		if (!$post) {
+			$url .= (is_array($params) && count($params) > 0) ? '?' . http_build_query($params) : $params;
+		}
 
-        return $return;
-    }
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		(is_null($header)) ?  : curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_POST, $post);
+		(!$post) ?  : curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $ssl);
+
+		$return = curl_exec($ch);
+
+		if (!$return) {
+			throw new RuntimeException('An error occurred with the request: ' . curl_error($ch));
+		}
+
+		return $return;
+	}
 }

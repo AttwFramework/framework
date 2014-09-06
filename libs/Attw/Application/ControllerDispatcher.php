@@ -34,9 +34,9 @@ class ControllerDispatcher
         }
 
         $controller = new $controller($modelsNamespace);
-        $controller->{$action}();
         $controller->setRouter($routingHandler);
         $controller->setRequest($request);
         $controller->setResponse($response);
+        $controller->{$action}();
     }
 }

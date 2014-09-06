@@ -11,6 +11,10 @@ namespace Attw\Router\Exception;
 
 use \Exception;
 
-class RouterException extends Exception
+class UrlParserException extends Exception
 {
+	public function invalidUrl($url)
+	{
+		throw new UrlParserException('Invalid URL passed: ' . $url);
+	}
 }

@@ -65,16 +65,6 @@ abstract class AbstractController extends Object
     public function index() {}
 
     /**
-     * Method that will be called before index action
-    */
-    public function before() {}
-
-    /**
-     * Method will be called on completion of execution
-    */
-    public function after() {}
-
-    /**
      * Instance a model
      *
      * @param string $model Model name to instance
@@ -128,7 +118,7 @@ abstract class AbstractController extends Object
      *
      * @return \Attw\HTTP\Request
     */
-    public function getRequest()
+    protected function getRequest()
     {
         return $this->request;
     }
@@ -148,7 +138,7 @@ abstract class AbstractController extends Object
      *
      * @return \Attw\HTTP\Response
     */
-    public function getResponse()
+    protected function getResponse()
     {
         return $this->response;
     }
@@ -158,7 +148,7 @@ abstract class AbstractController extends Object
      *
      * @return string
     */
-    public function getRoute($name, array $params = array())
+    protected function getRoute($name, array $params = array())
     {
         $this->router->getRouteUrl($name, $params);
     }

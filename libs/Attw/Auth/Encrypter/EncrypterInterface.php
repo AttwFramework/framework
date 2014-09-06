@@ -7,10 +7,12 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\Router\Exception;
+namespace Attw\Auth\Encrypter;
 
-use \Exception;
-
-class RouterException extends Exception
+interface EncrypterInterface
 {
+    /**
+     * @return string
+    */
+    public function encrypt($string);
 }

@@ -9,6 +9,10 @@
 
 namespace Attw\Router;
 
+use Attw\Router\RoutesCollection;
+use Attw\Router\RouteResult;
+use Attw\Router\Exception\RouterException;
+
 /**
  * Routing handler
 */
@@ -97,6 +101,7 @@ class RoutingHandler
                     }
                 }
 
+
                 if ($validControllers < 0 || $validActions < 0) {
                     $this->throwExceptionRouteNotFound();
                 }
@@ -106,13 +111,13 @@ class RoutingHandler
                         $this->throwExceptionRouteNotFound();
                     }
 
-                    $this->controller = $cControllerT;
-                    $this->action = $cActionT;
+                    $cController = $cControllerT;
+                    $cAction = $cActionT;
 
                     $paramsSetted = $route->getPath();
 
                     if (count($params) === 1 || count($params) === 2) {
-                    $this->params = array();
+                        $this->params = array();
                     } else {
                         unset($params[0], $params[1]);
 
@@ -129,26 +134,13 @@ class RoutingHandler
                             }
                         }
 
-                        $this->params = array_combine($paramsSetted, $params);
+                        $params = array_combine($paramsSetted, $params);
                     }
                 }
             }
         }
-    }
 
-    public function getController()
-    {
-        return $this->controller;
-    }
-
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    public function getParams()
-    {
-        return $this->params;
+        return new RouteResult($cController, $cAction, $params);
     }
 
     /**
@@ -185,32 +177,6 @@ class RoutingHandler
         $url = $controllerUrl . '/' . $actionUrl . '/' . implode('/', $paramsUrl);
 
         return $url;
-    }
-
-    /**
-     * Return the query strings from a URL
-     *
-     * @param string $url
-     * @return array Queries
-    */
-    public function getQueryStrings($url)
-    {
-        $params = explode('?', $url);
-        $queries = array();
-
-        if (count($params) > 1) {
-            $params = end($params);
-            $relations = explode('&', $params);
-
-            $queries = array();
-
-            foreach ($relations as $relation) {
-                $camps = explode('=', $relation);
-                $queries[ $camps[0] ] = $camps[1];
-            }
-        }
-
-        return $queries;
     }
 
     private function throwExceptionRouteNotFound()

@@ -63,21 +63,18 @@ class Application
         $defaultAction = 'index'
    ) {
         $url = ($request->issetQuery('url')) ? $request->query('url') : null;
-        $this->routingHandler->setParams($url, $defaultController, $defaultAction, $request->getMethod());
-        $controller = $controllerNamespace . '\\' . ucfirst($this->routingHandler->getController());
+        $route = $this->routingHandler->setParams($url, $request->getMethod(), $defaultController, $defaultAction);
+        $controller = $controllerNamespace . '\\' . ucfirst($route->getController());
 
-        $_GET = array_merge(
-        $this->routingHandler->getParams(),
-        $this->routingHandler->getQueryStrings($_SERVER['REQUEST_URI'])
-       );
+        $request->addQuery($route->getParams());
 
         $this->dispatcher->dispatch(
-        $controller,
-        $this->routingHandler->getAction(),
-        $this->routingHandler,
-        $response,
-        $request,
-        $modelsNamespace
+            $controller,
+            $route->getAction(),
+            $this->routingHandler,
+            $response,
+            $request,
+            $modelsNamespace
        );
     }
 }
