@@ -3,3 +3,4 @@ phpunit.xml
 phpunit
 vendor
 bootstrap.php
+libs/attw/auth
