@@ -146,9 +146,9 @@ class Request
 	 * @param string $property
 	 * @return mixed
 	 */
-	public function post($property)
+	public function post($property = null)
     {
-		return $this->post[$property];
+		return $property === null ? $this->post : $this->post[$property];
 	}
 
 	/**
@@ -157,9 +157,9 @@ class Request
 	 * @param string $property
 	 * @return mixed
 	 */
-	public function server($property)
+	public function server($property = null)
     {
-		return $this->server[$property];
+		return $property === null ? $this->server : $this->server[$property];
 	}
 
 	/**
@@ -168,9 +168,9 @@ class Request
 	 * @param string $property
 	 * @return array
 	 */
-	public function file($property)
+	public function file($property = null)
     {
-		return $this->files[$property];
+		return $property === null ? $this->files : $this->files[$property];
 	}
 
 	/**
