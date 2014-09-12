@@ -40,27 +40,35 @@ class RouterUrlGenerator implements RouterUrlGeneratorInterface
     */
     public function generate($routeName, array $params = array())
     {
-        if ($this->collection->has($routeName)) {
+        if (!$this->collection->has($routeName)) {
             throw new RouterException('Route not registred: ' . $routeName);
         }
 
         $routes = $this->collection->getAll();
-
         $route = $routes[$routeName];
-
         $controllerUrl = null;
         $actionUrl = null;
 
-        foreach ($route['controller'] as $key => $value) {
+        foreach ($route->getController() as $key => $value) {
             $controllerUrl = $key;
         }
 
-        foreach ($route['action'] as $key => $value) {
+        foreach ($route->getAction() as $key => $value) {
             $actionUrl = $key;
         }
 
+        return $controllerUrl . '/' . $actionUrl . '/' . implode('/', $this->detectParams($route, $params));
+    }
+
+    /**
+     * @param \Attw\Router\Route $route
+     * @param array              $params
+     * @return array
+    */
+    private function detectParams($route, array $params = array())
+    {
         $paramsUrl = array();
-        foreach ($route['route'] as $param) {
+        foreach ($route->getPath() as $param) {
             foreach ($params as $key => $value) {
                 if ($param == $key) {
                     $paramsUrl[] = $value;
@@ -68,8 +76,6 @@ class RouterUrlGenerator implements RouterUrlGeneratorInterface
             }
         }
 
-        $url = $controllerUrl . '/' . $actionUrl . '/' . implode('/', $paramsUrl);
-
-        return $url;
+        return $paramsUrl;
     }
 }

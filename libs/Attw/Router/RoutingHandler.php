@@ -107,7 +107,11 @@ class RoutingHandler
                 }
 
                 if (isset($cControllerR, $cActionR)) {
-                    if ($cController != $cControllerR || $cAction != $cActionR || $requestMethod != $route->getRequestMethod()) {
+                    if (
+                        strtolower($cController) != strtolower($cControllerR) 
+                        || strtolower($cAction) != strtolower($cActionR) 
+                        || strtolower($requestMethod) != strtolower($route->getRequestMethod())
+                    ) {
                         $this->throwExceptionRouteNotFound();
                     }
 
