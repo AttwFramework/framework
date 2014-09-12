@@ -144,41 +144,8 @@ class RoutingHandler
     }
 
     /**
-     * Get an url by a route registred on Attw\Router\RoutesCollection
-     *
-     * @param string $name
-     * @param array $params
-     * @return string Url
+     * @throws \Attw\Router\Exception\RouterException
     */
-    public function getRouteUrl($name, array $params = array())
-    {
-        $route = $this->routes[ $name ];
-
-        $controllerUrl = null;
-        $actionUrl = null;
-
-        foreach ($route['controller'] as $key => $value) {
-            $controllerUrl = $key;
-        }
-
-        foreach ($route['action'] as $key => $value) {
-            $actionUrl = $key;
-        }
-
-        $paramsUrl = array();
-        foreach ($route['route'] as $param) {
-            foreach ($params as $key => $value) {
-                if ($param == $key) {
-                    $paramsUrl[] = $value;
-                }
-            }
-        }
-
-        $url = $controllerUrl . '/' . $actionUrl . '/' . implode('/', $paramsUrl);
-
-        return $url;
-    }
-
     private function throwExceptionRouteNotFound()
     {
         throw new RouterException('Route not found');

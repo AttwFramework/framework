@@ -10,7 +10,6 @@
 namespace Attw\View;
 
 use Attw\View\ViewInterface;
-use Attw\Config\Configs;
 use Attw\Core\Object;
 use \Exception;
 use \InvalidArgumentException;
@@ -19,7 +18,7 @@ use \RuntimeException;
 /**
  * Constructor for views
 */
-class Views extends Object implements ViewInterface
+class StandartView extends Object implements ViewInterface
 {
     /**
      * Template file
@@ -29,11 +28,14 @@ class Views extends Object implements ViewInterface
     private $tplFile;
 
     /**
-     * Vars to template
+     * Setter for templates path
      *
-     * @var array
+     * @param string $path
     */
-    protected $vars = array();
+    public function setTemplatesPath($path)
+    {
+        $this->templatesPath = $path;
+    }
 
     /**
      * Set the template file to view
@@ -42,31 +44,15 @@ class Views extends Object implements ViewInterface
      * @throws \InvalidArgumentException case param $file is not a string
      * @throws \Exception case is not defined a path for templates
     */
-    protected function setTplFile($file)
+    private function setTplFile($file)
     {
-        if (!is_string($file)) {
-            throw new InvalidArgumentException(sprintf('%s::%s: the file must be a string',
-                                get_class($this),
-                                __METHOD__));
+        $fileWithPath = $this->templatesPath . DIRECTORY_SEPARATOR . $file;
+
+        if (!is_file($fileWithPath)) {
+            throw new RuntimeException('Template not found: ' . $fileWithPath);
         }
 
-        $configs = Configs::getInstance();
-
-        $paths = $configs->get('Paths');
-
-        if (!isset($paths['Templates'])) {
-            throw new Exception('Define a path for templates');
-        }
-
-        $templatesPath = $paths['Templates'];
-
-        $file = $templatesPath . DS . $file;
-
-        if (!is_file($file)) {
-            throw new RuntimeException('Template not found: ' . $file);
-        }
-
-        $this->tplFile = $file;
+        $this->tplFile = $fileWithPath;
     }
 
     /**
@@ -79,9 +65,7 @@ class Views extends Object implements ViewInterface
     public function render($tplFile, array $vars = array())
     {
         $this->setTplFile($tplFile);
-
         extract($vars);
-
         include_once $this->tplFile;
     }
 }

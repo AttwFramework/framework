@@ -31,7 +31,11 @@ class RoutesCollection
     */
     public function add(Route $route)
     {
-        $this->routes[ $route->getName() ] = $route;
+        if ($this->has($route->getName())) {
+            throw new RouterException('A route with this name have already was registred');
+        }
+        
+        $this->routes[$route->getName()] = $route;
     }
 
     /**
@@ -42,5 +46,14 @@ class RoutesCollection
     public function getAll()
     {
         return $this->routes;
+    }
+
+    /**
+     * @param string $routeName
+     * @return boolean
+    */
+    public function has($routeName)
+    {
+        return isset($this->routes[$routeName]);
     }
 }

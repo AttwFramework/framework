@@ -9,8 +9,6 @@
 
 namespace Attw\Paginator;
 
-use \Countable;
-
 /**
  * Interface to paginators
  * Countable

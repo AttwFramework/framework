@@ -10,9 +10,11 @@
 namespace Attw\Application;
 
 use Attw\Router\RoutingHandler;
+use Attw\Router\RouterUrlGeneratorInterface;
 use Attw\HTTP\Request;
 use Attw\HTTP\Response;
 use Attw\Application\ControllerDispatcher;
+use Attw\View\ViewInterface;
 
 /**
  * Attw Application
@@ -57,6 +59,8 @@ class Application
     public function run(
         Response $response,
         Request $request,
+        RouterUrlGeneratorInterface $urlGenerator,
+        ViewInterface $view,
         $controllerNamespace,
         $modelsNamespace,
         $defaultController = 'Index',
@@ -71,9 +75,10 @@ class Application
         $this->dispatcher->dispatch(
             $controller,
             $route->getAction(),
-            $this->routingHandler,
+            $urlGenerator,
             $response,
             $request,
+            $view,
             $modelsNamespace
        );
     }

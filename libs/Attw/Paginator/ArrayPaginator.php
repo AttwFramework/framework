@@ -119,7 +119,7 @@ class ArrayPaginator implements PaginatorInterface
 
     /**
      * Count how pages was paginated
-     * @see Contable Interface
+     * @see Countable Interface
      *
      * @return integer
     */

@@ -35,7 +35,7 @@ class Cookies
      *  transmitted in  secure connections (HTTPS)
      * @param boolean $httponly Transmitted only in HTTP protocols
     */
-    public function add($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httponly = false)
+    public function set($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httponly = false)
     {
         $this->cookies[] = func_get_args();
 
@@ -49,13 +49,10 @@ class Cookies
      * @throws \UnexpectedValueException case cookie name doesn't exists
      * @return mixed Cookie value
     */
-    public function read($name)
+    public function get($name)
     {
-        if (!$this->exists($name)) {
-            throw new UnexpectedValueException(sprintf('Cookie named %s doesn\'t exists', $name));
-        }
-
-        return $_COOKIE[ $name ];
+        $this->exceptionCookieNotFound($name);
+        return $_COOKIE[$name];
     }
 
     /**
@@ -64,19 +61,16 @@ class Cookies
      * @param string $name
      * @throws \UnexpectedValueException case cookie name doesn't exists
     */
-    public function del($name)
+    public function unset($name)
     {
-        if (!$this->exists($name)) {
-            throw new UnexpectedValueException(sprintf('Cookie named %s doesn\'t exists', $name));
-        }
-
+        $this->exceptionCookieNotFound($name);
         setcookie($name, null, time() - 3600);
     }
 
     /**
      * Delete all cookies
     */
-    public function delAll()
+    public function closeAll()
     {
         foreach ($_COOKIE as $name => $value) {
             $this->del($name);
@@ -89,8 +83,15 @@ class Cookies
      * @param string $name Cookie name
      * @return boolean
     */
-    public function exists($name)
+    public function has($name)
     {
         return array_key_exists($name, $_COOKIE);
+    }
+
+    private function exceptionCookieNotFound($name)
+    {
+        if (!$this->has($name)) {
+            throw new UnexpectedValueException(sprintf('Cookie named %s doesn\'t exists', $name));
+        }
     }
 }

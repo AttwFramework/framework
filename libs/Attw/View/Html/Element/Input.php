@@ -14,4 +14,14 @@ use Attw\View\Html\AbstractHtmlElementLeaf;
 class Input extends AbstractHtmlElementLeaf
 {
     protected $elementName = 'input';
+
+    /**
+	 * @param string|null $type
+	 * @param string|null $value
+    */
+    public function __construct($type = null, $value = null)
+    {
+    	$type !== null ? $this->addAttr('type', $type) : null;
+    	$value !== null ? $this->addAttr('value', $value) : null;
+    }
 }

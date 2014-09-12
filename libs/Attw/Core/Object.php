@@ -26,24 +26,6 @@ abstract class Object
     }
 
     /**
-     * Call a method of this object
-     *
-     * @param string $method Method to call
-     * @param array $params Params to method
-     * @return mixed Return the return of method called
-    */
-    public function callMethod($method, array $params = array())
-    {
-        if (!method_exists($method, $this)) {
-            throw new RuntimeException(sprintf('Method doesn\'t exists: %s::%s()',
-                                get_class($this),
-                                (string) $method));
-        }
-
-        return call_user_func_array(array($this, $method), $params);
-    }
-
-    /**
      * Write a log
      * The log will be save on file defined in Configs
      *

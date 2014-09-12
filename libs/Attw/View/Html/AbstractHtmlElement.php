@@ -40,7 +40,7 @@ abstract class AbstractHtmlElement implements Renderizable
     */
     public function addAttr($attribute, $value)
     {
-        $this->attrs[ $attribute ] = $value;
+        $this->attrs[$attribute] = $value;
 
         return $this;
     }

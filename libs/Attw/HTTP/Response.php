@@ -74,7 +74,7 @@ class Response
      *
      * @var integer
     */
-    private $statusCode = 200;
+    private $statusCode;
 
     /**
      * Header to be send
@@ -88,10 +88,10 @@ class Response
      *
      * @param integer $statusCode Set a status
     */
-    public function __construct($statusCode = null, $protocol = 'HTTP/1.1')
+    public function __construct($statusCode = null, $protocol = null)
     {
-        $this->statusCode = (is_null($statusCode)) ? http_response_code() : $statusCode;
-        $this->setProtocol($protocol);
+        $statusCode !== null ? $this->setStatusCode($statusCode) : $this->setStatusCode($statusCode);
+        $protocol !== null ? $this->setProtocol($protocol) : null;
     }
 
     /**

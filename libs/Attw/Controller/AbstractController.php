@@ -12,10 +12,10 @@ namespace Attw\Controller;
 use Attw\Core\Object;
 use \InvalidArgumentException;
 use \RuntimeException;
-use Attw\View\Views;
+use Attw\View\ViewInterface;
 use Attw\HTTP\Request;
 use Attw\HTTP\Response;
-use Attw\Router\RoutingHandler;
+use Attw\Router\RouterUrlGeneratorInterface;
 
 /**
  * Abstract controller to be a base to the other controllers
@@ -44,25 +44,28 @@ abstract class AbstractController extends Object
     private $modelsNamespace;
 
     /**
-     * Handler for routes
+     * Url generator
      *
-     * @var \Attw\Router\RoutingHandler
+     * @var \Attw\Router\RouterUrlGeneratorInterface
     */
-    private $router;
+    private $urlGenerator;
 
     /**
      * @var string $modelsNamespace
     */
-    public function __construct($modelsNamespace)
+    public function __construct($modelsNamespace, ViewInterface $view)
     {
         $this->modelsNamespace = $modelsNamespace;
+        $this->view = $view;
     }
 
     /**
      * Method that will called when a action be not defined by user
      * Allowed to be replaced
     */
-    public function index() {}
+    public function index()
+    {
+    }
 
     /**
      * Instance a model
@@ -79,7 +82,6 @@ abstract class AbstractController extends Object
         }
 
         $namespace = (substr($this->modelsNamespace, -1, 1) == '\\') ? $this->modelsNamespace : $this->modelsNamespace . '\\';
-
         $model_name = $namespace . $model;
 
         if (!class_exists($model_name)) {
@@ -99,8 +101,7 @@ abstract class AbstractController extends Object
     */
     protected function render($file, array $vars = array())
     {
-        $views = new Views();
-        $views->render($file, $vars);
+        $this->view->render($file, $vars);
     }
 
     /**
@@ -148,18 +149,18 @@ abstract class AbstractController extends Object
      *
      * @return string
     */
-    protected function getRoute($name, array $params = array())
+    protected function generateUrl($name, array $params = array())
     {
-        $this->router->getRouteUrl($name, $params);
+        $this->urlGenerator->getRouteUrl($name, $params);
     }
 
     /**
-     * Set routes handler
+     * Setter for url generator
      *
-     * @param \Attw\Router\RoutignHandler
+     * @param \Attw\Router\RouterUrlGeneratorInterface $urlGenerator
     */
-    public function setRouter(RoutingHandler $router)
+    public function setRouterUrlGenerator(RouterUrlGeneratorInterface $urlGenerator)
     {
-        $this->router = $router;
+        $this->urlGenerator = $urlGenerator;
     }
 }
