@@ -46,7 +46,7 @@ class RouterUrlGenerator implements RouterUrlGeneratorInterface
 
         $routes = $this->collection->getAll();
 
-        $route = $routes[$name];
+        $route = $routes[$routeName];
 
         $controllerUrl = null;
         $actionUrl = null;

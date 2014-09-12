@@ -51,6 +51,11 @@ abstract class AbstractController extends Object
     private $urlGenerator;
 
     /**
+     * @var \Attw\View\ViewInterface
+    */
+    private $view;
+
+    /**
      * @var string $modelsNamespace
     */
     public function __construct($modelsNamespace, ViewInterface $view)
@@ -151,7 +156,7 @@ abstract class AbstractController extends Object
     */
     protected function generateUrl($name, array $params = array())
     {
-        $this->urlGenerator->getRouteUrl($name, $params);
+        return $this->urlGenerator->generate($name, $params);
     }
 
     /**

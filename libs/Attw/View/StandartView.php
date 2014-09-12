@@ -28,6 +28,13 @@ class StandartView extends Object implements ViewInterface
     private $tplFile;
 
     /**
+     * Templates path
+     *
+     * @var string
+    */
+    private $templatesPath;
+
+    /**
      * Setter for templates path
      *
      * @param string $path
