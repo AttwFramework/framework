@@ -61,7 +61,7 @@ class Cookies
      * @param string $name
      * @throws \UnexpectedValueException case cookie name doesn't exists
     */
-    public function unset($name)
+    public function remove($name)
     {
         $this->exceptionCookieNotFound($name);
         setcookie($name, null, time() - 3600);
