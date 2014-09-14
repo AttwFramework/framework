@@ -26,27 +26,6 @@ class RoutingHandler
     private $routes = array();
 
     /**
-     * Current controller
-     *
-     * @var string
-    */
-    private $controller;
-
-    /**
-     * Current controller's action
-     *
-     * @var string
-    */
-    private $action;
-
-    /**
-     * Current Get params
-     *
-     * @var array
-    */
-    private $params = array();
-
-    /**
      * RoutesCollection
     */
     public function __construct(RoutesCollection $collection)

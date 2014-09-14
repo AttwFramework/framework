@@ -7,10 +7,10 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\View\Html\Element;
+namespace Attw\Html\Element;
 
-use Attw\View\Html\AbstractHtmlElementNotLeaf;
-use Attw\View\Html\Element\Input;
+use Attw\Html\AbstractHtmlElementNotLeaf;
+use Attw\Html\Element\Input;
 
 class Form extends AbstractHtmlElementNotLeaf
 {

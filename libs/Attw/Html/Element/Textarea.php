@@ -7,9 +7,9 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\View\Html\Element;
+namespace Attw\Html\Element;
 
-use Attw\View\Html\AbstractHtmlElementNotLeaf;
+use Attw\Html\AbstractHtmlElementNotLeaf;
 
 class Textarea extends AbstractHtmlElementNotLeaf
 {

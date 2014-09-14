@@ -43,7 +43,7 @@ class File implements FileInterface
     }
 
     /**
-     * Get the name of the file
+     * Returns the name of the file
      *
      * @return string
     */
@@ -53,7 +53,7 @@ class File implements FileInterface
     }
 
     /**
-     * Set the name of the file
+     * Returns the name of the file
      *
      * @param string $name
     */
@@ -63,7 +63,7 @@ class File implements FileInterface
     }
 
     /**
-     * Get the temporary name of the file
+     * Returns the temporary name of the file
      *
      * @return string
     */
@@ -73,7 +73,7 @@ class File implements FileInterface
     }
 
     /**
-     * Get the mime type of the file
+     * Returns the mime type of the file
      *
      * @return string
     */
@@ -83,7 +83,7 @@ class File implements FileInterface
     }
 
     /**
-     * Get the size of the file
+     * Returns the size of the file
      *
      * @return integer
     */
@@ -93,7 +93,7 @@ class File implements FileInterface
     }
 
     /**
-     * Get the extension of the file
+     * Returns the extension of the file
      *
      * @return string
     */
@@ -103,7 +103,7 @@ class File implements FileInterface
     }
 
     /**
-     * Set the extension
+     * Returns the extension
      *
      * @param string $extension
     */

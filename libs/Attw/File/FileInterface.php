@@ -15,35 +15,35 @@ namespace Attw\File;
 interface FileInterface
 {
     /**
-     * Get the name of the file
+     * Returns the name of the file
      *
      * @return string
     */
     public function getName();
 
     /**
-     * Get the temporary name of the file
+     * Returns the temporary name of the file
      *
      * @return string
     */
     public function getTmpName();
 
     /**
-     * Get the mime type of the file
+     * Returns the mime type of the file
      *
      * @return string
     */
     public function getMimeType();
 
     /**
-     * Get the size of the file
+     * Returns the size of the file
      *
      * @return integer
     */
     public function getSize();
 
     /**
-     * Get the extension of the file
+     * Returns the extension of the file
      *
      * @return string
     */

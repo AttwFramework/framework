@@ -7,11 +7,11 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\View\Html;
+namespace Attw\Html\Element;
 
-use Attw\View\Html\AbstractHtmlElement;
+use Attw\Html\AbstractHtmlElement;
 
-class AbstractHtmlElementLeaf extends AbstractHtmlElement
+abstract class AbstractHtmlElementLeaf extends AbstractHtmlElement
 {
     /**
      * Render the element

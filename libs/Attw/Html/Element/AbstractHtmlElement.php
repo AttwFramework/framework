@@ -7,15 +7,15 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\View\Html;
+namespace Attw\Html\Element;
 
-use Attw\View\Exception\ViewException;
-use Attw\Core\Renderizable;
+use Attw\Html\Exception\HtmlException;
+use Attw\Html\RenderizableInterface;
 
 /**
  * Interface to html elements
 */
-abstract class AbstractHtmlElement implements Renderizable
+abstract class AbstractHtmlElement implements RenderizableInterface
 {
     /**
      * Name of HTML element
