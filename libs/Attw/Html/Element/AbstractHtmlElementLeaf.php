@@ -9,7 +9,7 @@
 
 namespace Attw\Html\Element;
 
-use Attw\Html\AbstractHtmlElement;
+use Attw\Html\Element\AbstractHtmlElement;
 
 abstract class AbstractHtmlElementLeaf extends AbstractHtmlElement
 {
