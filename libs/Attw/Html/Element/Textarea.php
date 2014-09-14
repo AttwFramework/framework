@@ -9,7 +9,7 @@
 
 namespace Attw\Html\Element;
 
-use Attw\Html\AbstractHtmlElementNotLeaf;
+use Attw\Html\Element\AbstractHtmlElementNotLeaf;
 
 class Textarea extends AbstractHtmlElementNotLeaf
 {

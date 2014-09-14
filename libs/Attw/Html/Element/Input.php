@@ -9,7 +9,7 @@
 
 namespace Attw\Html\Element;
 
-use Attw\Html\AbstractHtmlElementLeaf;
+use Attw\Html\Element\AbstractHtmlElementLeaf;
 
 class Input extends AbstractHtmlElementLeaf
 {

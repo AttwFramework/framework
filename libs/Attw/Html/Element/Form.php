@@ -9,8 +9,7 @@
 
 namespace Attw\Html\Element;
 
-use Attw\Html\AbstractHtmlElementNotLeaf;
-use Attw\Html\Element\Input;
+use Attw\Html\Element\AbstractHtmlElementNotLeaf;
 
 class Form extends AbstractHtmlElementNotLeaf
 {

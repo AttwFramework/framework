@@ -80,7 +80,6 @@ class RoutingHandler
                     }
                 }
 
-
                 if ($validControllers < 0 || $validActions < 0) {
                     $this->throwExceptionRouteNotFound();
                 }
@@ -97,10 +96,18 @@ class RoutingHandler
                     $cController = $cControllerT;
                     $cAction = $cActionT;
 
-                    $paramsSetted = $route->getPath();
+                    $paramsSetted = array();
+
+                    if (
+                        array($cControllerR => $cControllerT) == $route->getController() 
+                        && array($cActionR => $cActionT) == $route->getAction() 
+                        && strtolower($requestMethod) != strtolower($route->getRequestMethod())) 
+                    {
+                        $paramsSetted = $route->getPath();
+                    }
 
                     if (count($params) === 1 || count($params) === 2) {
-                        $this->params = array();
+                        $params = array();
                     } else {
                         unset($params[0], $params[1]);
 
@@ -112,7 +119,7 @@ class RoutingHandler
                         if (count($params) > count($paramsSetted)) {
                             foreach ($params as $key => $value) {
                                 if ($key + 1 > count($paramsSetted)) {
-                                unset($params[ $key ]);
+                                    unset($params[ $key ]);
                                 }
                             }
                         }
