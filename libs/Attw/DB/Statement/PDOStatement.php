@@ -157,11 +157,6 @@ class PDOStatement implements StatementInterface
     public function setFetchMode($type, $secondParam = null, array $thirdParam = array())
     {
         try {
-            if (is_null($secondParam)) {
-                return $this->stmt->setFetchMode($type);
-            } elseif (count($thirdParam) == 0) {
-                return $this->stmt->setFetchMode($type, $secondParam);
-            }
             return $this->stmt->setFetchMode($type, $secondParam, $thirdParam);
         } catch (PDOException $e) {
             StatementException::pdoStmtError($e->getMessage(), $e->getCode());
