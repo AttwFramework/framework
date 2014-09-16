@@ -34,7 +34,7 @@ class Select
     /**
      * SQL query
      *
-     * @var object|string
+     * @var string
     */
     private $sql;
 
