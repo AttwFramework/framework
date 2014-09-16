@@ -18,30 +18,12 @@ use \InvalidArgumentException;
 */
 class MaxSize extends AbstractSizeFileValidator
 {
-    /**
-     * Constructor
-     *
-     * @param integer $maxSize
-     * @throws \InvalidArgumentException case The size is not an integer
-    */
-    public function __construct($maxSize)
-    {
-        parent::__construct($maxSize);
-        $this->exceptionMsg = sprintf('The file is bigger than you max size: %s', $this->size);
-    }
+    protected $comparasion = 0;
 
     /**
-     * The validation of file
+     * Message to exception
      *
-     * @param instanceof Attw\File\File $file
-     * @return boolean
+     * @var string
     */
-    protected function realValidation(FileInterface $file)
-    {
-        if ($this->size >= $file->getSize()) {
-            return true;
-        }
-
-        return false;
-    }
+    protected $exceptionMsg = 'The file is bigger than you max size: {SIZE}';
 }

@@ -18,12 +18,10 @@ class Extension extends AbstractValidatorInArray
 {
     protected $fileMethod = 'getExtension';
 
-    public function __construct(array $extensions)
-    {
-        parent::__construct($extensions);
-        $this->exceptionMsg = sprintf(
-            'Invalid extension. The file must have an of these extensions: %s',
-            implode(', ', $extensions)
-       );
-    }
+    /**
+     * Message to exception
+     *
+     * @var string
+    */
+    protected $exceptionMsg = 'Invalid extension. The file must have an of these extensions: {ARRAY}';
 }

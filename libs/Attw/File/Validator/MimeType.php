@@ -19,16 +19,9 @@ class MimeType extends AbstractValidatorInArray
     protected $fileMethod = 'getMimeType';
 
     /**
-     * Constructor
+     * Message to exception
      *
-     * @param array $types Valid types
+     * @var string
     */
-    public function __construct(array $types)
-    {
-        parent::__construct($types);
-        $this->exceptionMsg = sprintf(
-            'The type of file is invalid. Valid types: %s',
-            implode(', ', $types)
-       );
-    }
+    protected $exceptionMsg = 'The type of file is invalid. Valid types: {ARRAY}';
 }

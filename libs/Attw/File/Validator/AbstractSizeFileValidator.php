@@ -2,6 +2,7 @@
 namespace Attw\File\Validator;
 
 use Attw\File\Validator\AbstractFileValidator;
+use Attw\File\FileInterface;
 
 abstract class AbstractSizeFileValidator extends AbstractFileValidator
 {
@@ -16,9 +17,24 @@ abstract class AbstractSizeFileValidator extends AbstractFileValidator
 	public function __construct($size)
 	{
 		if (!is_int($size)) {
-			throw new InvalidArgumentException('Size should me integer');
+			throw new InvalidArgumentException('Size should be integer');
 		}
 
 		$this->size = 1024 * 1024 * $size;
 	}
+
+	/**
+     * The validation of file
+     *
+     * @param instanceof Attw\File\File $file
+     * @return boolean
+    */
+    protected function realValidation(FileInterface $file)
+    {
+        if ($this->comparasion == 0) {
+        	return $this->size >= $file->getSize();
+        }
+
+        return $this->size <= $file->getSize();
+    }
 }

@@ -13,4 +13,8 @@ use \Exception;
 
 class RouterException extends Exception
 {
+    public static function routeNotFound()
+    {
+        throw new RouterException('Route not found');
+    }
 }

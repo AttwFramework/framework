@@ -18,30 +18,12 @@ use \InvalidArgumentException;
 */
 class MinSize extends AbstractSizeFileValidator
 {
-    /**
-     * Constructor
-     *
-     * @param integer $minSize
-     * @throws \InvalidArgumentException case The size is not an integer
-    */
-    public function __construct($minSize)
-    {
-        parent::__construct($minSize);
-        $this->exceptionMsg = sprintf('The file is smaller than you min size: %s', $this->size);
-    }
+    protected $comparasion = 1;
 
     /**
-     * The validation of file
+     * Message to exception
      *
-     * @param instanceof Attw\File\File $file
-     * @return boolean
+     * @var string
     */
-    protected function realValidation(FileInterface $file)
-    {
-        if ($this->size <= $file->getSize()) {
-            return true;
-        }
-
-        return false;
-    }
+    protected $exceptionMsg = 'The file is smaller than you min size: {SIZE}';
 }

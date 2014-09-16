@@ -48,7 +48,7 @@ class RoutingHandler
         $cAction = (isset($params[1]) && $params[1] !== null && $params[1] !== '') ? strtolower($params[1]) : strtolower($defaultAction);
 
         if (count($this->routes) == 0) {
-            $this->throwExceptionRouteNotFound();
+            RouterException::routeNotFound();
         }
 
         foreach ($this->routes as $route) {
@@ -56,7 +56,7 @@ class RoutingHandler
             $actionData = $this->detectActionOrController($route->getAction(), $cAction, 'action');
 
             if ($controllerData['valids'] < 0 || $actionData['valids'] < 0) {
-                $this->throwExceptionRouteNotFound();
+                RouterException::routeNotFound();
             }
 
             if (isset($controllerData['controller_r'], $actionData['action_r'])) {
@@ -65,7 +65,7 @@ class RoutingHandler
                     || strtolower($cAction) != strtolower($actionData['action_r']) 
                     || strtolower($requestMethod) != strtolower($route->getRequestMethod())
                 ) {
-                    $this->throwExceptionRouteNotFound();
+                    RouterException::routeNotFound();
                 }
 
                 $cController = $controllerData['controller_t'];
@@ -120,13 +120,5 @@ class RoutingHandler
         }
 
         return $return;
-    }
-
-    /**
-     * @throws \Attw\Router\Exception\RouterException
-    */
-    private function throwExceptionRouteNotFound()
-    {
-        throw new RouterException('Route not found');
     }
 }

@@ -73,7 +73,7 @@ class Cookies
     public function closeAll()
     {
         foreach ($_COOKIE as $name => $value) {
-            $this->del($name);
+            $this->remove($name);
         }
     }
 

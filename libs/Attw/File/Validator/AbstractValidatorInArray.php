@@ -2,6 +2,7 @@
 namespace Attw\File\Validator;
 
 use Attw\File\Validator\AbstractFileValidator;
+use Attw\File\FileInterface;
 
 abstract class AbstractValidatorInArray extends AbstractFileValidator
 {
@@ -28,6 +29,7 @@ abstract class AbstractValidatorInArray extends AbstractFileValidator
     public function __construct(array $accepted)
     {
         $this->accepted = $accepted;
+        $this->createExceptionMessage($this->exceptionMsg, $accepted);
     }
 
     /**
@@ -36,5 +38,14 @@ abstract class AbstractValidatorInArray extends AbstractFileValidator
     protected function realValidation(FileInterface $file)
     {
         return in_array(call_user_func_array(array($file, $this->fileMethod), $this->fileMethodParams), $this->accepted);
+    }
+
+    /**
+     * @param string $message
+     * @param array  $array
+    */
+    protected function createExceptionMessage($message, array $array)
+    {
+        $this->exceptionMsg = str_replace('{ARRAY}', implode(', ', $array), $message);
     }
 }
