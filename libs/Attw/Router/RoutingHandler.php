@@ -45,11 +45,8 @@ class RoutingHandler
     {
         $params = explode('/', $url);
 
-        $cController = (isset($params[0]) && $params[0] !== null && $params[0] !== '') ? $params[0] : $defaultController;
-        $cAction = (isset($params[1]) && $params[1] !== null && $params[1] !== '') ? $params[1] : $defaultAction;
-
-        $cController = strtolower($cController);
-        $cAction = strtolower($cAction);
+        $cController = (isset($params[0]) && $params[0] !== null && $params[0] !== '') ? strtolower($params[0]) : strtolower($defaultController);
+        $cAction = (isset($params[1]) && $params[1] !== null && $params[1] !== '') ? strtolower($params[1]) : strtolower($defaultAction);
 
         if (count($this->routes) == 0) {
             $this->throwExceptionRouteNotFound();
