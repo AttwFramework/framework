@@ -76,7 +76,7 @@ class RoutingHandler
                                 ? $route->getParams() : array();
                 $params = array();
 
-                if (count($params) !== 1 || count($params) !== 2) {
+                if (count($params) > 2) {
                     unset($params[0], $params[1]);
 
                     foreach ($params as $key => $value) {
