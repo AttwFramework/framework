@@ -75,26 +75,8 @@ class RoutingHandler
                                 && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
                                 && strtolower($requestMethod) != strtolower($route->getRequestMethod()) 
                                 ? $route->getParams() : array();
-                $params = array();
 
-                if (count($params) > 2) {
-                    unset($params[0], $params[1]);
-
-                    foreach ($params as $key => $value) {
-                        $params[ $key - 2 ] = $value;
-                        unset($params[$key]);
-                    }
-
-                    if (count($params) > count($paramsSetted)) {
-                        foreach ($params as $key => $value) {
-                            if ($key + 1 > count($paramsSetted)) {
-                                unset($params[$key]);
-                            }
-                        }
-                    }
-
-                    $params = array_combine($paramsSetted, $params);
-                }
+                $params = $this->detectParams($params, $paramsSetted);
             }
         }
 
@@ -105,6 +87,7 @@ class RoutingHandler
      * @param string $property
      * @param string $currentProperty
      * @param string $name
+     * @return array
     */
     private function detectActionOrController($property, $currentProperty, $name)
     {
@@ -121,5 +104,34 @@ class RoutingHandler
         }
 
         return $return;
+    }
+
+    /**
+     * @param array $params
+     * @param array $routeParams
+     * @return array
+    */
+    private function detectParams(array $params, array $routeParams)
+    {
+        if (count($params) > 2) {
+            unset($params[0], $params[1]);
+
+            foreach ($params as $key => $value) {
+                $params[$key - 2] = $value;
+                unset($params[$key]);
+            }
+
+            if (count($params) > count($routeParams)) {
+                foreach ($params as $key => $value) {
+                    if ($key + 1 > count($routeParams)) {
+                        unset($params[$key]);
+                    }
+                }
+            }
+
+            return array_combine($routeParams, $params);
+        }
+
+        return array();
     }
 }

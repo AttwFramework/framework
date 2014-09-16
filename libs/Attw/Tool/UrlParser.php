@@ -21,7 +21,7 @@ class UrlParser
     */
     public function getQueries($url)
     {
-        $this->verifyUrl($url);
+        //$this->verifyUrl($url);
         $params = explode('?', $url);
         $queries = array();
 
