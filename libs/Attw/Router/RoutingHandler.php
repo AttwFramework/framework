@@ -73,7 +73,7 @@ class RoutingHandler
                 $cAction = $actionData['action_t'];
                 $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
                                 && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
-                                && strtolower($requestMethod) != strtolower($route->getRequestMethod()) 
+                                && strtolower($requestMethod) == strtolower($route->getRequestMethod()) 
                                 ? $route->getParams() : array();
 
                 $params = $this->detectParams($params, $paramsSetted);
