@@ -21,7 +21,7 @@ class UrlParser
     */
     public function getQueries($url)
     {
-        //$this->verifyUrl($url);
+        $this->verifyUrl($url);
         $params = explode('?', $url);
         $queries = array();
 
@@ -40,6 +40,9 @@ class UrlParser
         return $queries;
     }
 
+    /**
+     * @param string $url
+    */
     private function verifyUrl($url)
     {
         if (!filter_Var($url, FILTER_VALIDATE_URL)) {
