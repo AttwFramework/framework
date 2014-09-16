@@ -44,7 +44,6 @@ class RoutingHandler
     public function setParams($url, $requestMethod = 'GET', $defaultController, $defaultAction)
     {
         $params = explode('/', $url);
-
         $cController = (isset($params[0]) && $params[0] !== null && $params[0] !== '') ? strtolower($params[0]) : strtolower($defaultController);
         $cAction = (isset($params[1]) && $params[1] !== null && $params[1] !== '') ? strtolower($params[1]) : strtolower($defaultAction);
 
@@ -71,30 +70,24 @@ class RoutingHandler
 
                 $cController = $controllerData['controller_t'];
                 $cAction = $actionData['action_t'];
-                $paramsSetted = array();
+                $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
+                                && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
+                                && strtolower($requestMethod) != strtolower($route->getRequestMethod()) 
+                                ? $route->getParams() : array();
+                $params = array();
 
-                if (
-                    array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
-                    && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
-                    && strtolower($requestMethod) != strtolower($route->getRequestMethod())) 
-                {
-                    $paramsSetted = $route->getParams();
-                }
-
-                if (count($params) === 1 || count($params) === 2) {
-                    $params = array();
-                } else {
+                if (!count($params) === 1 || !count($params) === 2) {
                     unset($params[0], $params[1]);
 
                     foreach ($params as $key => $value) {
                         $params[ $key - 2 ] = $value;
-                        unset($params[ $key ]);
+                        unset($params[$key]);
                     }
 
                     if (count($params) > count($paramsSetted)) {
                         foreach ($params as $key => $value) {
                             if ($key + 1 > count($paramsSetted)) {
-                                unset($params[ $key ]);
+                                unset($params[$key]);
                             }
                         }
                     }
