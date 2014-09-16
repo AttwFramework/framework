@@ -34,7 +34,7 @@ class Select
     /**
      * SQL query
      *
-     * @var string
+     * @var object|string
     */
     private $sql;
 
@@ -164,7 +164,9 @@ class Select
     */
     public function __call($method, $args)
     {
-        $this->stmt = $this->sql !== null ? $this->connector->getStatement($this->sql) : null;
+        if (is_string($this->sql)) {
+            $this->stmt = $this->sql !== null ? $this->connector->getStatement($this->sql) : null;
+        }
 
         if (!method_exists($this, $method)) {
             if (!method_exists($this->stmt, $method)) {
