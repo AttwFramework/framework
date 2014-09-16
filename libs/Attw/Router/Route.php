@@ -79,7 +79,7 @@ class Route
         $params = (is_array($params)) ? $params : explode('/', $params);
         $this->route = array(
             'name' => $name,
-            'route' => $params,
+            'params' => $params,
             'controller' => $controllerR,
             'action' => $actionR,
             'request_method' => $requestMethod
@@ -121,9 +121,9 @@ class Route
      *
      * @return array
     */
-    public function getPath()
+    public function getParams()
     {
-        return $this->route['route'];
+        return $this->route['params'];
     }
 
     /**
