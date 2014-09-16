@@ -164,8 +164,8 @@ class Select
     */
     public function __call($method, $args)
     {
-        $this->stmt = $this->connector->getStatement($this->sql);
-        
+        $this->stmt = $this->sql !== null ? $this->connector->getStatement($this->sql) : null;
+
         if (!method_exists($this, $method)) {
             if (!method_exists($this->stmt, $method)) {
                 throw new \Exception('Method not found: ');
