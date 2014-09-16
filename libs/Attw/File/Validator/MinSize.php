@@ -18,7 +18,7 @@ use \InvalidArgumentException;
 */
 class MinSize extends AbstractSizeFileValidator
 {
-    protected $comparasion = 1;
+    protected $comparison = 1;
 
     /**
      * Message to exception

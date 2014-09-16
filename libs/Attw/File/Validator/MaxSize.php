@@ -18,7 +18,7 @@ use \InvalidArgumentException;
 */
 class MaxSize extends AbstractSizeFileValidator
 {
-    protected $comparasion = 0;
+    protected $comparison = 0;
 
     /**
      * Message to exception

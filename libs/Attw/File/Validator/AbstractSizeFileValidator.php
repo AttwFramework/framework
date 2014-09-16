@@ -11,6 +11,11 @@ abstract class AbstractSizeFileValidator extends AbstractFileValidator
 	*/
 	protected $size;
 
+    /**
+     * @var integer
+    */
+    protected $comparison;
+
 	/**
 	 * @param integer $size
 	*/
@@ -31,7 +36,7 @@ abstract class AbstractSizeFileValidator extends AbstractFileValidator
     */
     protected function realValidation(FileInterface $file)
     {
-        if ($this->comparasion == 0) {
+        if ($this->comparison == 0) {
         	return $this->size >= $file->getSize();
         }
 
