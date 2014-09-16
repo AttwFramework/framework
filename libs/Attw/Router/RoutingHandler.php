@@ -51,9 +51,6 @@ class RoutingHandler
         $cController = strtolower($cController);
         $cAction = strtolower($cAction);
 
-        $validControllers = 0;
-        $validActions = 0;
-
         if (count($this->routes) == 0) {
             $this->throwExceptionRouteNotFound();
         }

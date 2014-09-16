@@ -68,7 +68,7 @@ class RouterUrlGenerator implements RouterUrlGeneratorInterface
     private function detectParams($route, array $params = array())
     {
         $paramsUrl = array();
-        foreach ($route->getPath() as $param) {
+        foreach ($route->getParams() as $param) {
             foreach ($params as $key => $value) {
                 if ($param == $key) {
                     $paramsUrl[] = $value;
