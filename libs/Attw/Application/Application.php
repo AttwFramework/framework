@@ -67,7 +67,7 @@ class Application
         $defaultAction = 'index'
    ) {
         $url = ($request->issetQuery('url')) ? $request->query('url') : null;
-        $route = $this->routingHandler->setParams($url, $request->getMethod(), $defaultController, $defaultAction);
+        $route = $this->routingHandler->getRoute($url, $request->getMethod(), $defaultController, $defaultAction);
         $controller = $controllerNamespace . '\\' . ucfirst($route->getController());
 
         $request->addQuery($route->getParams());

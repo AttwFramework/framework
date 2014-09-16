@@ -40,8 +40,9 @@ class RoutingHandler
      * @param string $requestMethod
      * @param string $defaultController Default controller to application
      * @param string $defaultAction     Default action to controllers
+     * @return \Attw\Router\RouteResult
     */
-    public function setParams($url, $requestMethod = 'GET', $defaultController, $defaultAction)
+    public function getRoute($url, $requestMethod = 'GET', $defaultController, $defaultAction)
     {
         $params = explode('/', $url);
         $cController = (isset($params[0]) && $params[0] !== null && $params[0] !== '') ? strtolower($params[0]) : strtolower($defaultController);
