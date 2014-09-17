@@ -11,9 +11,7 @@ namespace Attw\View;
 
 use Attw\View\ViewInterface;
 use Attw\Core\Object;
-use \Exception;
-use \InvalidArgumentException;
-use \RuntimeException;
+use Attw\View\Exception\ViewException;
 
 /**
  * Constructor for views
@@ -55,7 +53,7 @@ class StandartView extends Object implements ViewInterface
         $fileWithPath = $this->templatesPath . DIRECTORY_SEPARATOR . $file;
 
         if (!is_file($fileWithPath)) {
-            throw new RuntimeException('Template not found: ' . $fileWithPath);
+            throw new ViewException('Template not found: ' . $fileWithPath);
         }
 
         return $fileWithPath;
