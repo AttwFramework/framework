@@ -45,13 +45,12 @@ class StandartView extends Object implements ViewInterface
     }
 
     /**
-     * Set the template file to view
+     * Validate file
      *
-     * @param string $file template file .tpl
-     * @throws \InvalidArgumentException case param $file is not a string
-     * @throws \Exception case is not defined a path for templates
+     * @param string $file
+     * @return string
     */
-    private function setTplFile($file)
+    private function validateFile($file)
     {
         $fileWithPath = $this->templatesPath . DIRECTORY_SEPARATOR . $file;
 
@@ -59,7 +58,7 @@ class StandartView extends Object implements ViewInterface
             throw new RuntimeException('Template not found: ' . $fileWithPath);
         }
 
-        $this->tplFile = $fileWithPath;
+        return $fileWithPath;
     }
 
     /**
@@ -71,8 +70,8 @@ class StandartView extends Object implements ViewInterface
     */
     public function render($tplFile, array $vars = array())
     {
-        $this->setTplFile($tplFile);
+        $file = $this->validateFile($tplFile);
         extract($vars);
-        include_once $this->tplFile;
+        include_once $file;
     }
 }
