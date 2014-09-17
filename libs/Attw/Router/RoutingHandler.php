@@ -45,8 +45,8 @@ class RoutingHandler
     public function getRoute($url, $requestMethod = 'GET', $defaultController, $defaultAction)
     {
         $params = explode('/', $url);
-        $cController = (isset($params[0]) && $params[0] !== null && $params[0] !== '') ? strtolower($params[0]) : strtolower($defaultController);
-        $cAction = (isset($params[1]) && $params[1] !== null && $params[1] !== '') ? strtolower($params[1]) : strtolower($defaultAction);
+        $cController = (isset($params[0]) && !$this->detectIfParamExists($params[0])) ? strtolower($params[0]) : strtolower($defaultController);
+        $cAction = (isset($params[1]) && !$this->detectIfParamExists($params[1])) ? strtolower($params[1]) : strtolower($defaultAction);
 
         if (count($this->routes) == 0) {
             RouterException::routeNotFound();
@@ -142,5 +142,14 @@ class RoutingHandler
         }
 
         return array();
+    }
+
+    /**
+     * @param string $param
+     * @return boolean
+    */
+    private function detectIfParamExists($param)
+    {
+        return $params !== null && $params !== '';
     }
 }
