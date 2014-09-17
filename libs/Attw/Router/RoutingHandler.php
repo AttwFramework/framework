@@ -151,6 +151,6 @@ class RoutingHandler
     */
     private function detectIfParamExists($param)
     {
-        return $params !== null && $params !== '';
+        return $param !== null && $param !== '';
     }
 }
