@@ -47,7 +47,8 @@ class RoutingHandler
         $params = explode('/', $url);
         $cController = (isset($params[0]) && !$this->detectIfParamExists($params[0])) ? strtolower($params[0]) : strtolower($defaultController);
         $cAction = (isset($params[1]) && !$this->detectIfParamExists($params[1])) ? strtolower($params[1]) : strtolower($defaultAction);
-
+        $result = array('controller' => $cController, 'action' => $cAction, 'params' => array());
+        
         if (count($this->routes) == 0) {
             RouterException::routeNotFound();
         }
