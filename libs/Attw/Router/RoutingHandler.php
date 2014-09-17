@@ -53,34 +53,43 @@ class RoutingHandler
         }
 
         foreach ($this->routes as $route) {
-            $controllerData = $this->detectActionOrController($route->getController(), $cController, 'controller');
-            $actionData = $this->detectActionOrController($route->getAction(), $cAction, 'action');
+            $result = $this->detectAll($route, $cController, $cAction, $requestMethod, $params);
+        }
 
-            if ($controllerData['valids'] < 0 || $actionData['valids'] < 0) {
+        return new RouteResult($result['controller'], $result['action'], $result['params']);
+    }
+
+    /**
+     * @param \Attw\Router\Route $route
+     * @param string             $cController
+     * @param string             $cAction
+     * @param string             $requestMethod
+     * @return array
+    */
+    private function detectAll(Route $route, $cController, $cAction, $requestMethod, array $params){
+        $controllerData = $this->detectActionOrController($route->getController(), $cController, 'controller');
+        $actionData = $this->detectActionOrController($route->getAction(), $cAction, 'action');
+
+        if (isset($controllerData['controller_r'], $actionData['action_r'])) {
+            if (
+                strtolower($cController) != strtolower($controllerData['controller_r']) 
+                || strtolower($cAction) != strtolower($actionData['action_r']) 
+                || strtolower($requestMethod) != strtolower($route->getRequestMethod())
+            ) {
                 RouterException::routeNotFound();
             }
 
-            if (isset($controllerData['controller_r'], $actionData['action_r'])) {
-                if (
-                    strtolower($cController) != strtolower($controllerData['controller_r']) 
-                    || strtolower($cAction) != strtolower($actionData['action_r']) 
-                    || strtolower($requestMethod) != strtolower($route->getRequestMethod())
-                ) {
-                    RouterException::routeNotFound();
-                }
+            $cController = $controllerData['controller_t'];
+            $cAction = $actionData['action_t'];
+            $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
+                            && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
+                            && strtolower($requestMethod) == strtolower($route->getRequestMethod()) 
+                            ? $route->getParams() : array();
 
-                $cController = $controllerData['controller_t'];
-                $cAction = $actionData['action_t'];
-                $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
-                                && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
-                                && strtolower($requestMethod) == strtolower($route->getRequestMethod()) 
-                                ? $route->getParams() : array();
-
-                $params = $this->detectParams($params, $paramsSetted);
-            }
+            $params = $this->detectParams($params, $paramsSetted);
         }
 
-        return new RouteResult($cController, $cAction, $params);
+        return array('controller' => $cController, 'action' => $cAction, 'params' => $params);
     }
 
     /**
