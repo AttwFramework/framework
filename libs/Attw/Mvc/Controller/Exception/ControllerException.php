@@ -30,7 +30,7 @@ class ControllerException extends Exception
 
     public static function modelsNamespaceNotDefined()
     {
-        self::someWasNotDefinedYet('Models namespace')
+        self::someWasNotDefinedYet('Models namespace');
     }
 
     public static function invalidController($controller)
