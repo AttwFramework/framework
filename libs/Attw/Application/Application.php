@@ -48,8 +48,9 @@ class Application
     /**
      * Constructor
      *
-     * @param \Attw\Application\ControllerDispatcher $dispatcher
-     * @param \Attw\Router\RoutingHandler $routingHandler
+     * @param \Attw\Mvc\Controller\ControllerDispatcher $dispatcher
+     * @param \Attw\Mvc\Model\ModelDispatcher           $modelDispatcher
+     * @param \Attw\Router\RoutingHandler               $routingHandler
     */
     public function __construct(ControllerDispatcher $dispatcher, ModelDispatcher $modelDispatcher, RoutingHandler $routingHandler)
     {
@@ -61,10 +62,15 @@ class Application
     /**
      * Executes the application
      *
-     * @param \Attw\HTTP\Request $request
-     * @param string $controllerNamespace Namespace for all controllers
-     * @param string $defaultController
-     * @param string $defaultAction
+     * @param \Attw\HTTP\Response                      $response 
+     * @param \Attw\HTTP\Request                       $request
+     * @param \Attw\Router\RouterUrlGeneratorInterface $urlGenerator
+     * @param \Attw\Mvc\View\ViewInterface             $view
+     * @param \Attw\Event\EventManagerInterface        $eventManager
+     * @param string                                   $controllerNamespace
+     * @param string                                   $defaultController
+     * @param string                                   $defaultAction
+     * @param string|null                              $modelsNamespace
     */
     public function run(
         Response $response,

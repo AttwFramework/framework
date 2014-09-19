@@ -194,7 +194,7 @@ abstract class AbstractController extends Object
     /**
      * Setter for views render
      *
-     * @param \Attw\View\ViewInterface $view
+     * @param \Attw\Mvc\View\ViewInterface $view
     */
     public function setViewsRender(ViewInterface $view)
     {

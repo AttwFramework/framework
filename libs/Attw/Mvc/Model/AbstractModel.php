@@ -21,14 +21,14 @@ abstract class AbstractModel extends Object
     /**
      * Use to data persistence
      *
-     * @var \Attw\DB\Storage\Storage
+     * @var \Attw\DB\Storage\StorageInterface
     */
     protected $storage;
 
     /**
      * Use to data entity persistence
      *
-     * @var \Attw\DB\Entity\EntityStorage
+     * @var \Attw\DB\Entity\EntityStorageInterface
     */
     protected $entity;
 
@@ -48,7 +48,7 @@ abstract class AbstractModel extends Object
     /**
      * Setter for storage object
      *
-     * @param \Attw\DB\Storage\StorageInterface      $storage
+     * @param \Attw\DB\Storage\StorageInterface $storage
     */
     public function setStorage(StorageInterface $storage)
     {

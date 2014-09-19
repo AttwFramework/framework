@@ -22,4 +22,14 @@ class ModelException extends Exception
     {
         throw new ModelException('Invalid model: ' . $model);
     }
+
+    public static function storageNotDefined()
+    {
+        throw new ModelException('Storage was not defined');
+    }
+
+    public static function entityStorageNotDefined()
+    {
+        throw new ModelException('Entity storage was not defined');
+    }
 }
