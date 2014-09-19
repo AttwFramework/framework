@@ -57,6 +57,6 @@ abstract class AbstractHtmlElementNotLeaf extends AbstractHtmlElement
         $children = $this->createChildren();
         $attrs = $this->createAttrs();
 
-        return sprintf('<%s %s>%s</%s>', $this->elementName, $attrs, $children, $this->elementName);
+        return sprintf('<%s %s>' . "\n" . '%s</%s>', $this->elementName, $attrs, $children, $this->elementName);
     }
 }

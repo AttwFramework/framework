@@ -45,8 +45,8 @@ class RoutingHandler
     public function getRoute($url, $requestMethod = 'GET', $defaultController, $defaultAction)
     {
         $params = explode('/', $url);
-        $cController = (isset($params[0]) && !$this->detectIfParamExists($params[0])) ? strtolower($params[0]) : strtolower($defaultController);
-        $cAction = (isset($params[1]) && !$this->detectIfParamExists($params[1])) ? strtolower($params[1]) : strtolower($defaultAction);
+        $cController = (isset($params[0]) && $this->detectIfParamExists($params[0])) ? strtolower($params[0]) : strtolower($defaultController);
+        $cAction = (isset($params[1]) && $this->detectIfParamExists($params[1])) ? strtolower($params[1]) : strtolower($defaultAction);
         $result = array('controller' => $cController, 'action' => $cAction, 'params' => array());
 
         if (count($this->routes) == 0) {
@@ -73,21 +73,20 @@ class RoutingHandler
 
         if (isset($controllerData['controller_r'], $actionData['action_r'])) {
             if (
-                strtolower($cController) != strtolower($controllerData['controller_r']) 
-                || strtolower($cAction) != strtolower($actionData['action_r']) 
-                || strtolower($requestMethod) != strtolower($route->getRequestMethod())
+                strtolower($cController) == strtolower($controllerData['controller_r']) 
+                && strtolower($cAction) == strtolower($actionData['action_r']) 
+                && strtolower($requestMethod) == strtolower($route->getRequestMethod())
             ) {
-                RouterException::routeNotFound();
+
+                $cController = $controllerData['controller_t'];
+                $cAction = $actionData['action_t'];
+                $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
+                                && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
+                                && strtolower($requestMethod) == strtolower($route->getRequestMethod()) 
+                                ? $route->getParams() : array();
+
+                $params = $this->detectParams($params, $paramsSetted);
             }
-
-            $cController = $controllerData['controller_t'];
-            $cAction = $actionData['action_t'];
-            $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
-                            && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
-                            && strtolower($requestMethod) == strtolower($route->getRequestMethod()) 
-                            ? $route->getParams() : array();
-
-            $params = $this->detectParams($params, $paramsSetted);
         }
 
         return array('controller' => $cController, 'action' => $cAction, 'params' => $params);
@@ -151,6 +150,11 @@ class RoutingHandler
     */
     private function detectIfParamExists($param)
     {
-        return $param !== null && $param !== '';
+        $param = trim($param);
+        if ($param !== null && $param !== '') {
+            return true;
+        }
+
+        return false;
     }
 }

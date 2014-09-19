@@ -9,11 +9,9 @@
 
 namespace Attw\Autoloader;
 
-use  Attw\Autoloader\Autoloadable\AutoloadableInterface;
+use Attw\Autoloader\Autoloadable\AutoloadableInterface;
+use \SplObjectStorage;
 
-    /**
-     * For autoload classes
-    */
 class Autoloader
 {
     /**
@@ -25,7 +23,7 @@ class Autoloader
 
     public function __construct()
     {
-        $this->autoloadables = new \SplObjectStorage();
+        $this->autoloadables = new SplObjectStorage();
     }
 
     /**

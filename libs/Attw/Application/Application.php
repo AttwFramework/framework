@@ -13,8 +13,10 @@ use Attw\Router\RoutingHandler;
 use Attw\Router\RouterUrlGeneratorInterface;
 use Attw\HTTP\Request;
 use Attw\HTTP\Response;
-use Attw\Application\ControllerDispatcher;
-use Attw\View\ViewInterface;
+use Attw\Mvc\Controller\ControllerDispatcher;
+use Attw\Mvc\View\ViewInterface;
+use Attw\Event\EventManagerInterface;
+use Attw\Mvc\Model\ModelDispatcher;
 
 /**
  * Attw Application
@@ -25,9 +27,16 @@ class Application
      * Controller dispatcher
      * Will instantiate the controller
      *
-     * @var \Attw\Application\ControllerDispatcher
+     * @var \Attw\Mvc\Controller\ControllerDispatcher
     */
     private $dispatcher;
+
+    /**
+     * Model dispatcher
+     *
+     * @var \Attw\Mvc\Model\ModelDisptahcer
+    */
+    private $modelDispatcher;
 
     /**
      * Handler for routes
@@ -42,9 +51,10 @@ class Application
      * @param \Attw\Application\ControllerDispatcher $dispatcher
      * @param \Attw\Router\RoutingHandler $routingHandler
     */
-    public function __construct(ControllerDispatcher $dispatcher, RoutingHandler $routingHandler)
+    public function __construct(ControllerDispatcher $dispatcher, ModelDispatcher $modelDispatcher, RoutingHandler $routingHandler)
     {
         $this->dispatcher = $dispatcher;
+        $this->modelDispatcher = $modelDispatcher;
         $this->routingHandler = $routingHandler;
     }
 
@@ -61,24 +71,27 @@ class Application
         Request $request,
         RouterUrlGeneratorInterface $urlGenerator,
         ViewInterface $view,
+        EventManagerInterface $eventManager,
         $controllerNamespace,
-        $modelsNamespace,
         $defaultController = 'Index',
-        $defaultAction = 'index'
-   ) {
+        $defaultAction = 'index',
+        $modelsNamespace = null
+    ) {
         $url = ($request->issetQuery('url')) ? $request->query('url') : null;
         $route = $this->routingHandler->getRoute($url, $request->getMethod(), $defaultController, $defaultAction);
-        $controller = $controllerNamespace . '\\' . ucfirst($route->getController());
 
         $request->addQuery($route->getParams());
 
         $this->dispatcher->dispatch(
-            $controller,
+            $controllerNamespace,
+            ucfirst($route->getController()),
             $route->getAction(),
             $urlGenerator,
             $response,
             $request,
             $view,
+            $eventManager,
+            $this->modelDispatcher,
             $modelsNamespace
        );
     }

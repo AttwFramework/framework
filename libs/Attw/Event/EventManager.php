@@ -20,36 +20,11 @@ use \InvalidArgumentException;
 class EventManager implements EventManagerInterface
 {
     /**
-     * Instance of EventManager
-     *
-     * @var \Attw\Event\EventManager
-    */
-    private static $instance;
-
-    /**
      * All listeners
      *
      * @var array
     */
     private $events = array();
-
-    private function __construct() {}
-
-    private function __clone() {}
-
-    /**
-     * Get instance of EventManager
-     *
-     * @return instanceof Attw\Event\EventManager
-    */
-    public static function getInstance()
-    {
-        if (!(self::$instance instanceof EventManager)) {
-            self::$instance = new EventManager();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Add a listener
