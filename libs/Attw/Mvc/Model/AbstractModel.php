@@ -37,7 +37,6 @@ abstract class AbstractModel extends Object
      *
      * @param \Attw\DB\Storage\StorageInterface      $storage
      * @param \Attw\DB\Entity\EntityStorageInterface $entityStorage
-     * @throws \RuntimeException case is not defined a default connection
     */
     public function __construct(StorageInterface $storage, EntityStorageInterface $entityStorage)
     {
@@ -57,7 +56,7 @@ abstract class AbstractModel extends Object
 
     /**
      * Returns storage object
-     *
+     *cd c:?workspace/var/www/
      * @return \Attw\DB\Storage\StorageInterface
     */
     public function getStorage()
