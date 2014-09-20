@@ -9,7 +9,7 @@
 
 namespace Attw\DB\SQL\MySQL\Statement;
 
-use Attw\DB\SQL\MySQL\Statement\AbstractStatementWithWhere;r
+use Attw\DB\SQL\MySQL\Statement\AbstractStatementWithWhere;
 use Attw\DB\SQL\MySQL\Operator\Equal;
 use Attw\DB\SQL\MySQL\Operator\AndOperator;
 use Attw\DB\SQL\MySQL\Clause\From;
