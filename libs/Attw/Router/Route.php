@@ -37,44 +37,8 @@ class Route
         $controller = $controllerAndAction['controller'];
         $action = $controllerAndAction['action'];
 
-        $controllerR = array();
-        $actionR = array();
-
-        if (is_array($controller)) {
-            if (count($controller) >= 1) {
-                $controllerArrReverse = array_reverse($controller);
-
-                for ($i = 0; $i < count($controller) - 1; $i++) {
-                    array_shift($controllerArrReverse);
-                }
-
-                foreach ($controllerArrReverse as $key => $value) {
-                    $controllerArrReverse[ strtolower($key) ] = $value;
-                }
-
-                $controllerR = $controllerArrReverse;
-            } else {
-                throw new RouterException('Define a valid controller');
-            }
-        } else {
-            $controllerR[ strtolower($controller) ] = $controller;
-        }
-
-        if (is_array($action)) {
-            if (count($action) >= 1) {
-                $actionArrReverse = array_reverse($action);
-
-                for ($i = 0; $i < count($action) - 1; $i++) {
-                    array_shift($actionArrReverse);
-                }
-
-                $actionR = $actionArrReverse;
-            } else {
-                throw new RouterException('Define a valid action');
-            }
-        } else {
-            $actionR[ $action ] = $action;
-        }
+        $controllerR = $this->defineProperty('controller', $controller);
+        $actionR = $this->defineProperty('action', $action);
 
         $params = (is_array($params)) ? $params : explode('/', $params);
         $this->route = array(
@@ -134,5 +98,30 @@ class Route
     public function getRequestMethod()
     {
         return $this->route['request_method'];
+    }
+
+    private function defineProperty($name, $property)
+    {
+        if (is_array($property)) {
+            if (count($property) >= 1) {
+                $controllerArrReverse = array_reverse($property);
+
+                for ($i = 0; $i < count($property) - 1; $i++) {
+                    array_shift($controllerArrReverse);
+                }
+
+                foreach ($controllerArrReverse as $key => $value) {
+                    $controllerArrReverse[ strtolower($key) ] = $value;
+                }
+
+                $propertyR = $controllerArrReverse;
+            } else {
+                throw new RouterException('Define a valid ' . $name);
+            }
+        } else {
+            $propertyR[ strtolower($property) ] = $property;
+        }
+
+        return $propertyR;
     }
 }
