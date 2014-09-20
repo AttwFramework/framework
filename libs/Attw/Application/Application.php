@@ -34,7 +34,7 @@ class Application
     /**
      * Model dispatcher
      *
-     * @var \Attw\Mvc\Model\ModelDisptahcer
+     * @var \Attw\Mvc\Model\ModelDispatcher
     */
     private $modelDispatcher;
 

@@ -16,6 +16,20 @@ use Attw\Mvc\Model\Exception\ModelException;
 class ModelDispatcher
 {
     /**
+     * Storage object
+     *
+     * @var \Attw\DB\Storage\StorageInterface
+    */
+    protected $storage;
+
+    /**
+     * Entity storage object
+     *
+     * @var \Attw\DB\Entity\EntityStorageInterface
+    */
+    protected $entityStorage;
+    
+    /**
      * @param \Attw\DB\Storage\StorageInterface      $storage
      * @param \Attw\DB\Entity\EntityStorageInterface $entityStorage
     */

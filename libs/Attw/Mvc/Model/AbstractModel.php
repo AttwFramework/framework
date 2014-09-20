@@ -19,18 +19,18 @@ use Attw\Core\Object;
 abstract class AbstractModel extends Object
 {
     /**
-     * Use to data persistence
+     * Storage object
      *
      * @var \Attw\DB\Storage\StorageInterface
     */
     protected $storage;
 
     /**
-     * Use to data entity persistence
+     * Entity storage object
      *
      * @var \Attw\DB\Entity\EntityStorageInterface
     */
-    protected $entity;
+    protected $entityStorage;
 
     /**
      * Configure the storage and storage to entities
