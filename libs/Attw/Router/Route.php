@@ -102,6 +102,7 @@ class Route
 
     private function defineProperty($name, $property)
     {
+        $propertyR = array();
         if (is_array($property)) {
             if (count($property) >= 1) {
                 $controllerArrReverse = array_reverse($property);
