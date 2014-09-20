@@ -31,16 +31,9 @@ class Delete extends AbstractStatementWithWhere
      *
      * @param string $table
      * @param array|string $where can be array or a string
-     * @param string $operator Operator to separate $where (Default: AND)
-     * @throws \InvliadArgumentException case $table is not a string
-     * @throws \InvliadArgumentException case $operator is diferent of AND and OR
     */
     public function __construct($table, $where)
     {
-        if (!is_string($table)) {
-            throw new \InvalidArgumentException(sprintf('%s::%s: the table must be a string', get_class($this), __METHOD__));
-        }
-
         $this->table = new From($table);
         $this->constructWhere($where);
     }
