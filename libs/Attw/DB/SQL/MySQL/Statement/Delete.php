@@ -9,8 +9,7 @@
 
 namespace Attw\DB\SQL\MySQL\Statement;
 
-use Attw\DB\SQL\AbstractStatement;
-use Attw\DB\SQL\MySQL\Clause\Where;
+use Attw\DB\SQL\MySQL\Statement\AbstractStatementWithWhere;r
 use Attw\DB\SQL\MySQL\Operator\Equal;
 use Attw\DB\SQL\MySQL\Operator\AndOperator;
 use Attw\DB\SQL\MySQL\Clause\From;
@@ -18,7 +17,7 @@ use Attw\DB\SQL\MySQL\Clause\From;
 /**
  * MySQL SQL Delete statement
 */
-class Delete extends AbstractStatement
+class Delete extends AbstractStatementWithWhere
 {
     /**
      * Table to delete some registries
@@ -26,13 +25,6 @@ class Delete extends AbstractStatement
      * @var \Attw\DB\SQL\MySQL\Clause\From
     */
     private $table;
-
-    /**
-     * Where clause to indicate some registry
-     *
-     * @var \Attw\DB\SQL\MySQL\Clause\Where
-    */
-    private $where;
 
     /**
      * Contruct a delete statement
@@ -50,17 +42,7 @@ class Delete extends AbstractStatement
         }
 
         $this->table = new From($table);
-
-        if (is_array($where)) {
-            $equals = array();
-            foreach ($where as $column => $value) {
-                $equals[] = new Equal($column, $value);
-            }
-
-            $this->where = new Where(new AndOperator($equals));
-        } else {
-            $this->where = new Where($where);
-        }
+        $this->constructWhere($where);
     }
 
     /**

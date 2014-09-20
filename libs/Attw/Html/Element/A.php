@@ -18,6 +18,6 @@ class A extends AbstractHtmlElementNotLeaf
     public function __construct($href = null, $target = null)
     {
         $href !== null ? $this->addAttr('href', $href) : null;
-        $taget !== null ? $this->addAttr('target', $target) : null;
+        $target !== null ? $this->addAttr('target', $target) : null;
     }
 }

@@ -9,6 +9,8 @@
 
 namespace Attw\DB\SQL\MySQL\Statement;
 
+use Attw\DB\SQL\MySQL\Clause\Where;
+
 abstract class AbstractStatementWithWhere extends AbstractStatement
 {
     protected $where;
@@ -21,10 +23,11 @@ abstract class AbstractStatementWithWhere extends AbstractStatement
     protected function constructWhere($where)
     {
         if (is_array($where)) {
-        $equals = array();
-        foreach ($where as $column => $value) {
-            $equals[] = new Equal($column, $value);
-        }
+            $equals = array();
+            
+            foreach ($where as $column => $value) {
+                $equals[] = new Equal($column, $value);
+            }
 
             $this->where = new Where(new AndOperator($equals));
         } else {
