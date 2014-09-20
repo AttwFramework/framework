@@ -53,7 +53,7 @@ abstract class AbstractController extends Object
     private $urlGenerator;
 
     /**
-     * @var \Attw\View\ViewInterface
+     * @var \Attw\Mvc\View\ViewInterface
     */
     private $view;
 
