@@ -20,7 +20,7 @@ class Cookies
     private $response;
 
     /**
-     * @param \Attw\Http\Response
+     * @param \Attw\Http\Response $response
     */
     public function __construct(Response $response)
     {
@@ -34,7 +34,7 @@ class Cookies
     */
     public function set(Cookie $cookie)
     {
-        $headerStructure .= 'name=' . $cookie->getName();
+        $headerStructure  = 'name=' . $cookie->getName();
         $headerStructure .= ' value=' . $cookie->getValue();
         $headerStructure .= ' path=' . $cookie->getPath();
         $headerStructure .= ' expire=' . $cookie->getExpire();

@@ -21,7 +21,7 @@ class Cookie
     /**
      * Cookie value
      *
-     * @var string|null
+     * @var mixed
     */
     private $value;
 
@@ -62,11 +62,11 @@ class Cookie
     private $httpOnly;
 
     /**
-     * @param string $name Cookie name
-     * @param mixed $value Cookie value
+     * @param string  $name Cookie name
+     * @param mixed   $value Cookie value
      * @param integer $expire Cookie timeout
-     * @param string $path Path to save the cookie
-     * @param string $domain Domain that cookie will be available
+     * @param string  $path Path to save the cookie
+     * @param string|null  $domain Domain that cookie will be available
      * @param boolean $secure TRUE case the cookie only can be
      *  transmitted in  secure connections (HTTPS)
      * @param boolean $httponly Transmitted only in HTTP protocols

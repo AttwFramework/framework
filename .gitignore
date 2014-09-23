@@ -4,3 +4,4 @@ phpunit
 vendor
 bootstrap.php
 libs/attw/auth
+*/.git
