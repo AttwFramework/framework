@@ -13,8 +13,8 @@ use Attw\Core\Object;
 use \InvalidArgumentException;
 use \RuntimeException;
 use Attw\Mvc\View\ViewInterface;
-use Attw\HTTP\Request;
-use Attw\HTTP\Response;
+use Attw\Http\Request;
+use Attw\Http\Response;
 use Attw\Router\RouterUrlGeneratorInterface;
 use Attw\Event\EventManagerInterface;
 use Attw\Mvc\Model\ModelDispatcher;
@@ -27,14 +27,14 @@ abstract class AbstractController extends Object
     /**
      * HTTP Request handler
      *
-     * @var \Attw\HTTP\Request
+     * @var \Attw\Http\Request
     */
     private $request;
 
     /**
      * HTTP Response handler
      *
-     * @var \Attw\HTTP\Response
+     * @var \Attw\Http\Response
     */
     private $response;
 
@@ -134,7 +134,7 @@ abstract class AbstractController extends Object
     /**
      * Set the request handler
      *
-     * @param \Attw\HTTP\Request $request
+     * @param \Attw\Http\Request $request
     */
     public function setRequest(Request $request)
     {
@@ -144,7 +144,7 @@ abstract class AbstractController extends Object
     /**
      * Get HTTP requests
      *
-     * @return \Attw\HTTP\Request
+     * @return \Attw\Http\Request
     */
     public function getRequest()
     {
@@ -154,7 +154,7 @@ abstract class AbstractController extends Object
     /**
      * Set the response handler
      *
-     * @param \Attw\HTTP\Response $response
+     * @param \Attw\Http\Response $response
     */
     public function setResponse(Response $response)
     {
@@ -164,7 +164,7 @@ abstract class AbstractController extends Object
     /**
      * Get HTTP responses
      *
-     * @return \Attw\HTTP\Response
+     * @return \Attw\Http\Response
     */
     public function getResponse()
     {

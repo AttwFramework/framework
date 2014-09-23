@@ -11,8 +11,8 @@ namespace Attw\Application;
 
 use Attw\Router\RoutingHandler;
 use Attw\Router\RouterUrlGeneratorInterface;
-use Attw\HTTP\Request;
-use Attw\HTTP\Response;
+use Attw\Http\Request;
+use Attw\Http\Response;
 use Attw\Mvc\Controller\ControllerDispatcher;
 use Attw\Mvc\View\ViewInterface;
 use Attw\Event\EventManagerInterface;
@@ -62,8 +62,8 @@ class Application
     /**
      * Executes the application
      *
-     * @param \Attw\HTTP\Response                      $response 
-     * @param \Attw\HTTP\Request                       $request
+     * @param \Attw\Http\Response                      $response 
+     * @param \Attw\Http\Request                       $request
      * @param \Attw\Router\RouterUrlGeneratorInterface $urlGenerator
      * @param \Attw\Mvc\View\ViewInterface             $view
      * @param \Attw\Event\EventManagerInterface        $eventManager

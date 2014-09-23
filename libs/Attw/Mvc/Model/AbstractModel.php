@@ -9,8 +9,8 @@
 
 namespace Attw\Mvc\Model;
 
-use Attw\DB\Storage\StorageInterface;
-use Attw\DB\Entity\EntityStorageInterface;
+use Attw\Db\Storage\StorageInterface;
+use Attw\Db\Entity\EntityStorageInterface;
 use Attw\Core\Object;
 
 /**
@@ -21,22 +21,22 @@ abstract class AbstractModel extends Object
     /**
      * Storage object
      *
-     * @var \Attw\DB\Storage\StorageInterface
+     * @var \Attw\Db\Storage\StorageInterface
     */
     protected $storage;
 
     /**
      * Entity storage object
      *
-     * @var \Attw\DB\Entity\EntityStorageInterface
+     * @var \Attw\Db\Entity\EntityStorageInterface
     */
     protected $entityStorage;
 
     /**
      * Configure the storage and storage to entities
      *
-     * @param \Attw\DB\Storage\StorageInterface      $storage
-     * @param \Attw\DB\Entity\EntityStorageInterface $entityStorage
+     * @param \Attw\Db\Storage\StorageInterface      $storage
+     * @param \Attw\Db\Entity\EntityStorageInterface $entityStorage
     */
     public function __construct(StorageInterface $storage, EntityStorageInterface $entityStorage)
     {
@@ -47,7 +47,7 @@ abstract class AbstractModel extends Object
     /**
      * Setter for storage object
      *
-     * @param \Attw\DB\Storage\StorageInterface $storage
+     * @param \Attw\Db\Storage\StorageInterface $storage
     */
     public function setStorage(StorageInterface $storage)
     {
@@ -57,7 +57,7 @@ abstract class AbstractModel extends Object
     /**
      * Returns storage object
      *cd c:?workspace/var/www/
-     * @return \Attw\DB\Storage\StorageInterface
+     * @return \Attw\Db\Storage\StorageInterface
     */
     public function getStorage()
     {
@@ -67,7 +67,7 @@ abstract class AbstractModel extends Object
     /**
      * Setter for entity storage object
      *
-     * @param \Attw\DB\Entity\EntityStorageInterface $entityStorage
+     * @param \Attw\Db\Entity\EntityStorageInterface $entityStorage
     */
     public function setEntityStorage(EntityStorageInterface $entityStorage)
     {
@@ -77,7 +77,7 @@ abstract class AbstractModel extends Object
     /**
      * Returns entity storage object
      *
-     * @return \Attw\DB\Entity\EntityStorageInterface
+     * @return \Attw\Db\Entity\EntityStorageInterface
     */
     public function getEntityStorage()
     {

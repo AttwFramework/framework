@@ -25,7 +25,7 @@ For you handle HTTP requests.
 
 To facilitate tests, you can pass the constructor of the class arrays with values of requests:
 ```php
-use Attw\HTTP\Request;
+use Attw\Http\Request;
 
 $query = array('a' => 1, 'b' => 2);
 $post = array('a' => 3, 'b' => 4);

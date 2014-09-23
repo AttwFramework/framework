@@ -7,7 +7,7 @@
  * @link http://attwframework.github.io
  */
 
-namespace Attw\HTTP;
+namespace Attw\Http;
 
 /**
  * Request handler

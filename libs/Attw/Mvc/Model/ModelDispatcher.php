@@ -9,8 +9,8 @@
 
 namespace Attw\Mvc\Model;
 
-use Attw\DB\Storage\StorageInterface;
-use Attw\DB\Entity\EntityStorageInterface;
+use Attw\Db\Storage\StorageInterface;
+use Attw\Db\Entity\EntityStorageInterface;
 use Attw\Mvc\Model\Exception\ModelException;
 
 class ModelDispatcher
@@ -18,20 +18,20 @@ class ModelDispatcher
     /**
      * Storage object
      *
-     * @var \Attw\DB\Storage\StorageInterface
+     * @var \Attw\Db\Storage\StorageInterface
     */
     protected $storage;
 
     /**
      * Entity storage object
      *
-     * @var \Attw\DB\Entity\EntityStorageInterface
+     * @var \Attw\Db\Entity\EntityStorageInterface
     */
     protected $entityStorage;
     
     /**
-     * @param \Attw\DB\Storage\StorageInterface      $storage
-     * @param \Attw\DB\Entity\EntityStorageInterface $entityStorage
+     * @param \Attw\Db\Storage\StorageInterface      $storage
+     * @param \Attw\Db\Entity\EntityStorageInterface $entityStorage
     */
     public function __construct(StorageInterface $storage = null, EntityStorageInterface $entityStorage = null)
     {

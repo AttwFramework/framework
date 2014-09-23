@@ -11,8 +11,8 @@ namespace Attw\Mvc\Controller;
 
 use Attw\Router\RouterUrlGeneratorInterface;
 use Attw\Mvc\Controller\Exception\ControllerException;
-use Attw\HTTP\Request;
-use Attw\HTTP\Response;
+use Attw\Http\Request;
+use Attw\Http\Response;
 use Attw\Mvc\View\ViewInterface;
 use Attw\Event\EventManagerInterface;
 use Attw\Mvc\Model\ModelDispatcher;

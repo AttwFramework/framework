@@ -7,91 +7,40 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\HTTP;
+namespace Attw\Http;
 
-use \UnexpectedValueException;
+use Attw\Http\Response;
+use Attw\Http\Cookie;
 
-/**
- * Manage HTTP cookies
-*/
 class Cookies
 {
     /**
-     * All cookies created by this class
-     *
-     * @var array
+     * @var \Attw\Http\Response
     */
-    private $cookies;
+    private $response;
 
     /**
-     * Create a cookie
-     *
-     * @param string $name Cookie name
-     * @param mixed $value Cookie value
-     * @param integer $expire Cookie timeout
-     * @param string $path Path to save the cookie
-     * @param string $domain Domine that cookie will be available
-     * @param boolean $secure TRUE case the cookie only can be
-     *  transmitted in  secure connections (HTTPS)
-     * @param boolean $httponly Transmitted only in HTTP protocols
+     * @param \Attw\Http\Response
     */
-    public function set($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httponly = false)
+    public function __construct(Response $response)
     {
-        $this->cookies[] = func_get_args();
-
-        setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+        $this->response = $response;
     }
 
     /**
-     * Read a cookie
+     * Sets an http cookie
      *
-     * @param string $name Cookie name
-     * @throws \UnexpectedValueException case cookie name doesn't exists
-     * @return mixed Cookie value
+     * @param \Attw\Http\Cookie $cookie
     */
-    public function get($name)
+    public function set(Cookie $cookie)
     {
-        $this->exceptionCookieNotFound($name);
-        return $_COOKIE[$name];
-    }
+        $headerStructure .= 'name=' . $cookie->getName();
+        $headerStructure .= ' value=' . $cookie->getValue();
+        $headerStructure .= ' path=' . $cookie->getPath();
+        $headerStructure .= ' expire=' . $cookie->getExpire();
+        $headerStructure .= ' domain=' . $cookie->getDomain();
+        $headerStructure .= ' httponly=' . $cookie->getHttpOnly();
 
-    /**
-     * Delete a cookie
-     *
-     * @param string $name
-     * @throws \UnexpectedValueException case cookie name doesn't exists
-    */
-    public function remove($name)
-    {
-        $this->exceptionCookieNotFound($name);
-        setcookie($name, null, time() - 3600);
-    }
-
-    /**
-     * Delete all cookies
-    */
-    public function closeAll()
-    {
-        foreach ($_COOKIE as $name => $value) {
-            $this->remove($name);
-        }
-    }
-
-    /**
-     * Verify if a cookie exists
-     *
-     * @param string $name Cookie name
-     * @return boolean
-    */
-    public function has($name)
-    {
-        return array_key_exists($name, $_COOKIE);
-    }
-
-    private function exceptionCookieNotFound($name)
-    {
-        if (!$this->has($name)) {
-            throw new UnexpectedValueException(sprintf('Cookie named %s doesn\'t exists', $name));
-        }
+        $this->response->sendHeader('Set-Cookie', $headerStructure);
     }
 }
