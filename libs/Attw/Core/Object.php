@@ -30,7 +30,7 @@ abstract class Object
      * The log will be save on file defined in Configs
      *
      * @param string $message Message to log
-     * @param string | integer $type Log type
+     * @param string|integer $type Log type
      * @throws \RuntimeException case logs is not actived
      * @return mixed Return of Logger\Log\File::write()
     */

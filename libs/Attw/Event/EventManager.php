@@ -30,7 +30,7 @@ class EventManager implements EventManagerInterface
      * Add a listener
      *
      * @param string $name
-     * @param array | callable $listener
+     * @param array|callable $listener
      * @param integer $priority
      * @throws \InvalidArgumentException case $name is not a string
      * @throws \Attw\Event\Exception\EventException case $listener is string
@@ -85,7 +85,7 @@ class EventManager implements EventManagerInterface
      * Remove a listener
      *
      * @param string $name
-     * @param callable | string $listener
+     * @param callable|string $listener
     */
     public function unlisten($name = null, $listener = null)
     {

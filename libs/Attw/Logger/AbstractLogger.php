@@ -44,7 +44,7 @@ abstract class AbstractLogger implements LoggerInterface
      *
      * @var string
     */
-    protected static $logStructure = '[:type | :date] :message';
+    protected static $logStructure = '[:type|:date] :message';
 
     /**
      * Set log structure
@@ -60,7 +60,7 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * Attach a customized camps on log
      *
-     * @param array | string $camp If be array, be the association
+     * @param array|string $camp If be array, be the association
      *  if is string, require the second param
      * @param string $value
     */

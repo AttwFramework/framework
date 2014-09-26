@@ -88,7 +88,7 @@ class Response
      *
      * @param integer $statusCode Set a status
     */
-    public function __construct($statusCode = null, $protocol = null)
+    public function __construct($statusCode = 200, $protocol = null)
     {
         $statusCode !== null ? $this->setStatusCode($statusCode) : $this->setStatusCode($statusCode);
         $protocol !== null ? $this->setProtocol($protocol) : null;
@@ -152,7 +152,7 @@ class Response
     /**
      * Attach a HTTP Reponse to send
      *
-     * @param string | array $name
+     * @param string|array $name
      * @param string $value
     */
     public function addHeader($name, $value = null)

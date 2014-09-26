@@ -7,7 +7,7 @@
  * @link http://attwframework.github.io
 */
 
-namespace Attw\Http;
+namespace Attw\Http\Cookie;
 
 class Cookie
 {

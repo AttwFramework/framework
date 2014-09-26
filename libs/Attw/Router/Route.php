@@ -25,7 +25,7 @@ class Route
      * Constructor
      *
      * @param string $name
-     * @param array | string
+     * @param array|string
      * @param array $controllerAndAction
     */
     public function __construct($name, $params, array $controllerAndAction, $requestMethod = 'GET')
