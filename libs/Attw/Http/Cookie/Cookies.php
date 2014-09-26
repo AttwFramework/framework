@@ -9,7 +9,7 @@
 
 namespace Attw\Http\Cookie;
 
-use Attw\Http\Cookie;
+use Attw\Http\Cookie\Cookie;
 use Attw\Tool\Collection\ArrayCollection;
 
 class Cookies
