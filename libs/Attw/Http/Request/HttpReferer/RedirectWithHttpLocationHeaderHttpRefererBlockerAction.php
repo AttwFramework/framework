@@ -10,6 +10,7 @@
 namespace Attw\Http\Request\HttpReferer;
 
 use Attw\Http\RedirectHttpRefererBlockerAction;
+use Attw\Http\Response;
 
 class RedirectWithHttpLocationHeaderHttpRefererBlockerAction extends RedirectHttpRefererBlockerAction
 {
@@ -29,7 +30,7 @@ class RedirectWithHttpLocationHeaderHttpRefererBlockerAction extends RedirectHtt
         parent::__construct($url);
         $this->response = $response;
     }
-    
+
     /**
      * Executes the action
     */

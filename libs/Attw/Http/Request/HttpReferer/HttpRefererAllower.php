@@ -28,7 +28,7 @@ class HttpRefererAllower implements HttpRefererValidatorInterface
      *
      * @var \Attw\Http\Request\HttpReferer\HttpRefererBlockerActionInterface
     */
-    private $setActionToBlockeds;
+    private $actionToBlockeds;
 
     /**
      * @param \Attw\Http\Request\HttpReferer\HttpRefererBlockerActionInterface $action
