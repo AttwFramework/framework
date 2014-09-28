@@ -22,7 +22,7 @@ class ArrayCollection implements CollectionInterface
      *
      * @var array
     */
-    private $array = array();
+    protected $array = array();
 
     /**
      * @param string $key
@@ -43,6 +43,14 @@ class ArrayCollection implements CollectionInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return array
+    */
+    public function getAll()
+    {
+        return $this->array;
     }
 
     /**

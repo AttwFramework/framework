@@ -18,21 +18,28 @@ use \IteratorAggregate;
 interface CollectionInterface extends Countable, IteratorAggregate
 {
     /**
-     * Remove all entries of collection
+     * Clear the collection
     */
     public function clear();
 
     /**
-     * Remove an entry
+     * Removes an entry
     */
     public function remove($key);
 
     /**
-     * Return the value of an entry
+     * Returns the value of an entry
      *
      * @return mixed
     */
     public function get($key);
+
+    /**
+     * Returns all entries
+     *
+     * @return mixed
+    */
+    public function getAll();
 
     /**
      * Insert an entry

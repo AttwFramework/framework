@@ -14,16 +14,6 @@ Events component of [AttwFramework](https://github.com/attwframework/framework).
     }
 }
 ```
-###Autoload
-```json
-{
-    "autoload": {
-        "psr-4": {
-            "Attw\Event\\": "vendor/attwframework/event/"
-        }
-    }
-}
-```
 ##How to use
 ###Creating an event
 First, create an instance of ```Attw\Event\EventManager```:

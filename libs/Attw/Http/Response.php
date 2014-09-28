@@ -88,10 +88,10 @@ class Response
      *
      * @param integer $statusCode Set a status
     */
-    public function __construct($statusCode = 200, $protocol = null)
+    public function __construct($statusCode = 200, $protocol = 'HTTP/1.1')
     {
-        $statusCode !== null ? $this->setStatusCode($statusCode) : $this->setStatusCode($statusCode);
-        $protocol !== null ? $this->setProtocol($protocol) : null;
+        $this->setStatusCode($statusCode);
+        $protocol !== 'HTTP/1.1' || $protocol !== null ? $this->setProtocol($protocol) : null;
     }
 
     /**
@@ -136,7 +136,7 @@ class Response
     */
     public function setStatusCode($code)
     {
-        $this->statusCode = $code;
+        $this->statusCode = (int) $code;
     }
 
     /**

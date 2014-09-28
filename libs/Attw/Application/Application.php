@@ -83,10 +83,12 @@ class Application
         $defaultAction = 'index',
         $modelsNamespace = null
     ) {
-        $url = ($request->issetQuery('url')) ? $request->query('url') : null;
+        $url = ($request->query->exists('url')) ? $request->query->get('url') : null;
         $route = $this->routingHandler->getRoute($url, $request->getMethod(), $defaultController, $defaultAction);
 
-        $request->addQuery($route->getParams());
+        foreach ($route->getParams() as $key => $value) {
+            $request->query->set($key, $value);
+        }
 
         $this->dispatcher->dispatch(
             $controllerNamespace,

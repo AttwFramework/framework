@@ -4,13 +4,12 @@ File
 
 File component of [AttwFramework](https://github.com/attwframework/framework).
 
-##Composer autoload
+##Composer
+###Download
 ```json
 {
-    "autoload": {
-    "psr-4": {
-        "Attw\File\\": "vendor/attwframework/file/"
-    }
+    "require": {
+        "attwframework/file": "dev-master"
     }
 }
 ```

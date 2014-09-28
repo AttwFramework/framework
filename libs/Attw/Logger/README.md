@@ -12,14 +12,4 @@ Logger component of [AttwFramework](https://github.com/attwframework/framework).
     }
 }
 ```
-###Autoload
-```json
-{
-    "autoload": {
-    "psr-4": {
-        "Attw\Logger\\": "vendor/attwframework/logger/"
-    }
-    }
-}
-```
 ##How to use
