@@ -43,11 +43,11 @@ class HttpRefererBlocker implements HttpRefererValidatorInterface
     */
     public function validate(Request $request)
     {
-        if (!$request->issetServer('HTTP_REFERER')) {
+        if (!$request->server->exists('HTTP_REFERER')) {
             throw new HttpRefererException('Define an HTTP referer');
         }
         
-        $referer = $request->server('HTTP_REFERER');
+        $referer = $request->server->get('HTTP_REFERER');
 
         foreach ($this->blocked as $blockedReferer)
         {

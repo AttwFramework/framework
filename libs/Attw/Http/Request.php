@@ -58,7 +58,7 @@ class Request
      *
      * @var \Attw\Http\Request\Method\RequestsCollection
     */
-    public $cookie;
+    public $cookies;
 
     /**
      * Request method
