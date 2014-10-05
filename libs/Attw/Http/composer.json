@@ -13,7 +13,8 @@
     "type": "library",
     "keywords": ["framework-component"],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "attwframework/tool": "dev-master"
     },
     "autoload": {
         "psr-4": {
