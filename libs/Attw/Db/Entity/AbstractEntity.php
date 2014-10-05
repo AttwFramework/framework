@@ -9,15 +9,14 @@
 
 namespace Attw\Db\Entity;
 
-use \RuntimeException;
-use \ReflectionProperty;
+use Attw\Db\Exception\EntityException;
 
 /**
  * Interface to an entity
 */
 abstract class AbstractEntity
 {
-    protected $_table;
+    protected $_configs;
 
     /**
      * Database fields
@@ -30,10 +29,16 @@ abstract class AbstractEntity
      * Constructor to entity
      * List the table columns to variable $this->fields
     */
-    public function __construct()
+    public function __construct($id = null)
     {
         $this->fields = get_object_vars($this);
-        unset($this->fields['fields']);
+        unset($this->fields['fields'], $this->fields['_configs']);
+        $this->validateConfigs();
+
+        if ($id !== null) {
+            $this->{$this->getPrimaryKey()} = $id;
+            $this->fields[$this->getPrimaryKey()] = $id;
+        }
     }
 
     /**
@@ -49,7 +54,8 @@ abstract class AbstractEntity
     {
         $this->verifyIfHasField($column);
 
-        $this->{$column} = print_r($value, true);
+        $this->{$column} = $value;
+        $this->fields[$column] = $value;
     }
 
     /**
@@ -63,82 +69,100 @@ abstract class AbstractEntity
     {
         $this->verifyIfHasField($column);
 
-        $columns = get_object_vars($this);
-
-        return $columns[ $column ];
+        return $this->fields[$column];
     }
 
     /**
-     * Get table of entity
+     * Returns table of entity
      *
      * @return string
     */
     public function getTable()
     {
-        return $this->_table;
+        return $this->_configs['table'];
     }
 
     /**
-     * Get all columns with values of the entity
+     * Returns all columns with values of the entity
      *
      * @return array
     */
     public function getColumns()
     {
-        $columns = get_object_vars($this);
-        unset($columns['_table'], $columns['fields']);
-
-        return $columns;
+        return $this->fields;
     }
 
     /**
-     * Verify if a column is a valid field of the table
+     * Verifies if a column is a valid field of the table
      *
      * @param string $field
      * @return boolean
     */
-    public function hasField($field)
+    public function hasColumn($field)
     {
         return in_array($field, array_keys($this->fields));
     }
 
     /**
-     * Get the primary key of the table
+     * Returns all columns that are entities
      *
-     * @throws \RuntimeException case exists two primary keys
-     * @throws \RuntimeException case is not defined a primary key
+     * @return array
+    */
+    public function getEntityColumns()
+    {
+        return isset($this->_configs['entities']) ? $this->_configs['entities'] : array();
+    }
+
+    /**
+     * Returns datetime columns
+     *
+     * @return array
+    */
+    public function getDatetimeColumns()
+    {
+        return isset($this->_configs['datetime']) ? $this->_configs['datetime'] : array();
+    }
+
+    /**
+     * Returns the primary key of the table
+     *
      * @return array
     */
     public function getPrimaryKey()
     {
-        $primaries = array();
-
-        foreach ($this->getColumns() as $field => $value) {
-            $property = new ReflectionProperty(get_class($this), $field);
-
-            if(
-                '%2F%2A%2A%0D%0A%09%09+%2A+%40key+PRIMARY+KEY%0D%0A++++%09%2A%2F' === urlencode($property->getDocComment())
-                || '%2F%2A%2A%0D%0A%09%09+%2A+%40key+PRIMARY+KEY%0D%0A%09%09%2A%2F' === urlencode($property->getDocComment())
-           ){
-                $primaries[ $field ] = $value;
-            }
-        }
-
-        if (count($primaries) > 1) {
-            throw new RuntimeException('Define a only primary key on entity: ' . get_class($this));
-        } elseif (count($primaries) == 0) {
-            throw new RuntimeException('Define a primary key on entity with the comment "/** * @key PRIMARY KEY */" in entity: ' . get_class($this));
-        }
-
-        return $primaries;
+        return $this->_configs['primary_key'];
     }
 
     private function verifyIfHasField($column)
     {
-        if (!$this->hasField($column)) {
-            throw new RuntimeException(sprintf('%s isn not a column of the table %s',
+        if (!$this->hasColumn($column)) {
+            throw new EntityException(sprintf('%s isn not a column of the table %s',
                                 $column,
-                                $this->_table));
+                                $this->_configs['table']));
+        }
+    }
+
+    private function validateConfigs()
+    {
+        //Primary key
+        if (!isset($this->_configs['primary_key'])) {
+            EntityException::primaryKeyNotDefined($this);
+        } elseif (!is_string($this->_configs['primary_key'])) {
+            EntityException::primaryKeyIsNotString($this);
+        } elseif (!$this->hasColumn($this->_configs['primary_key'])) {
+            EntityException::primaryKeyIsNotAColumn($this);
+        }
+
+        //Table
+        if (!isset($this->_configs['table'])) {
+            EntityException::tableNotDefined($this);
+        } elseif (!is_string($this->_configs['table'])) {
+            EntityException::tableIsNotString($this);
+        }
+
+        //Entities
+        if (isset($this->_configs['entities']) && !is_array($this->_configs['entities'])) {
+            EntityException::entitiesAreNotOnAnArray($this);
         }
     }
 }

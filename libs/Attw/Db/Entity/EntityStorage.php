@@ -14,6 +14,8 @@ use Attw\Db\Entity\EntityStorageInterface;
 use Attw\Db\Storage\StorageInterface;
 use Attw\Db\Statement\StatementFetch;
 use Attw\Db\Exception\StorageException;
+use \DateTime;
+use \ReflectionClass;
 
 /**
  * Interface for storage with entites
@@ -42,14 +44,24 @@ class EntityStorage implements EntityStorageInterface
     */
     public function find(AbstractEntity $entity)
     {
-        $primaryKey = $entity->getPrimaryKey();
-        $this->hasPrimaryKey($primaryKey);
-
-        $stmt = $this->storage->read($entity->getTable())->where($primaryKey);
+        $where = $this->constructWhere($entity);
+        $stmt = $this->storage->read($entity->getTable())->where($where);
         $stmt->setFetchMode(StatementFetch::FETCH_CLASS, get_class($entity), array());
         $stmt->execute();
+        $result = $stmt->fetch();
 
-        return $stmt->fetch();
+        foreach ($entity->getEntityColumns() as $column => $columnEntity) {
+            $reflection = new ReflectionClass($columnEntity);
+            $instance = $reflection->newInstanceArgs(array($result->{$column}));
+            $result->{$column} = $this->find($instance);
+        }
+
+        foreach ($entity->getDatetimeColumns() as $column) {
+            $instance = new DateTime($result->{$column});
+            $result->{$column} = $instance;
+        }
+
+        return $result;
     }
 
     /**
@@ -63,8 +75,24 @@ class EntityStorage implements EntityStorageInterface
         $stmt = $this->storage->read($entity->getTable());
         $stmt->setFetchMode(StatementFetch::FETCH_CLASS, get_class($entity), array());
         $stmt->execute();
+        $result = $stmt->fetchAll();
 
-        return $stmt->fetchAll();
+        foreach ($result as $key => $value) {
+            foreach ($entity->getEntityColumns() as $column => $columnEntity) {
+                $reflection = new ReflectionClass($columnEntity);
+                $instance = $reflection->newInstanceArgs(array($value->{$column}));
+                $value->{$column} = $this->find($instance);
+                $result[$key] = $value;
+            }
+
+            foreach ($entity->getDatetimeColumns() as $column) {
+                $instance = new DateTime($value->{$column});
+                $value->{$column} = $instance;
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -121,20 +149,16 @@ class EntityStorage implements EntityStorageInterface
     */
     public function remove(AbstractEntity $entity)
     {
-        $primaryKey = $entity->getPrimaryKey();
-        $this->hasPrimaryKey($primaryKey);
-
-        $stmt = $this->storage->remove($entity->getTable(), $primaryKey);
+        $where = $this->constructWhere($entity);
+        $stmt = $this->storage->remove($entity->getTable(), $where);
 
         return $stmt->execute();
     }
 
-    private function hasPrimaryKey(array $primaryKey)
+    private function constructWhere(AbstractEntity $entity)
     {
-        foreach ($primaryKey as $key => $value) {
-            if (is_null($value) || $value == '' || $value == ' ') {
-                throw new \RuntimeException(sprintf('The primary key "%s" must not be null', $key));
-            }
-        }
+        $columns = $entity->getColumns();
+        $primaryKey = $entity->getPrimaryKey();
+        return array($primaryKey => $columns[$primaryKey]);
     }
 }

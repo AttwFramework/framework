@@ -160,6 +160,7 @@ class MySQLiStatement implements StatementInterface
         }
 
         $this->result = $this->stmt->get_result();
+        return $this;
     }
 
     /**

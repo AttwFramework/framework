@@ -109,20 +109,34 @@ $userData = $stmt->fetch();
 ###Entities
 Entities are classes that represent tables.
 To create an entity, create a class that extends ```Attw\Db\Storage\Entity\AbstractEntity```.
+The configurations of an entity must be on a property called ```$_configs``` as an array.
+If a column of the table represents a registry of other table, create an index ```entities``` like the example.
+And if a column represents a datetime column, create an index ```datetime```:
 ```php
+namespace Your\Namespace\Entity;
+
 use Attw\Db\Storage\Entity\AbstractEntity;
 
 class User extends AbstractEntity
 {
-    protected $_table = 'users';
+    protected $_configs = array(
+        'table' => 'users',
+        'primary_key' => 'id',
+        'entities' => array(
+            'category' => 'Your\Namespace\Entity\Category'
+        ),
+        'datetime' => arrat(
+            'created_at',
+            'updated_at'
+        )
+    );
     
-    /**
-     * @key PRIMARY KEY
-    */
     protected $id;
-    
     protected $username;
     protected $email;
+    protected $category;
+    protected $created_at;
+    protected $updated_at;
 }
 ```
 ####Inserting and updataing
@@ -155,16 +169,14 @@ $entityStorage->persist($user);
 ```
 ####Removing
 ```php
-$user = new User();
-$user->id = 17;
+$user = new User(17);
 
 $entityStorage->remove($user);
 ```
 ####Fetching
 **Fetch one**
 ```php
-$user = new User();
-$user->id = 21;
+$user = new User(21);
 
 $data = $entityStorage->fetch($user);
 ```

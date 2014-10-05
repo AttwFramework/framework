@@ -107,6 +107,7 @@ class PDOStatement implements StatementInterface
             }
 
             count($parameters) > 0 ? $this->stmt->execute($parameters) : $this->stmt->execute();
+            return $this;
         } catch (PDOException $e) {
             StatementException::pdoStmtError($e->getMessage(), $e->getCode());
         }
