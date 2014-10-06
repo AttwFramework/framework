@@ -12,5 +12,5 @@ namespace Attw\Event\Exception;
 use \Exception;
 
 class EventException extends Exception
-{	
+{
 }
