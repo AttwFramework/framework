@@ -41,6 +41,3 @@ or create a ready application via composer:
 Gabriel Jacinto - [gamjj74@hotmail.com](mailto:gamjj74@hotmail.com) - [Facebook](https://www.facebook.com/gabriel.forca?ref=tn_tnmn) - [Twitter](https://twitter.com/GabrielJMJ)
 ##License
 [MIT License](https://github.com/AttwFramework/framework/blob/master/LICENSE.md)
-
-#Donate
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SGTX96K78W3PY) 
