@@ -16,7 +16,7 @@ use Attw\Mvc\View\Exception\ViewException;
 /**
  * Constructor for views
 */
-class StandartView extends Object implements ViewInterface
+class StandardView extends Object implements ViewInterface
 {
     /**
      * Template file

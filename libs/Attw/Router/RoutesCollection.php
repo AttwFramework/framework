@@ -11,6 +11,7 @@ namespace Attw\Router;
 
 use Attw\Router\Route;
 use Attw\Core\Collection;
+use Attw\Router\Exception\RouterException;
 
 /**
  * Routes collection

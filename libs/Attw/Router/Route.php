@@ -28,7 +28,7 @@ class Route
      * @param array|string
      * @param array $controllerAndAction
     */
-    public function __construct($name, $params, array $controllerAndAction, $requestMethod = 'GET')
+    public function __construct($name, array $params, array $controllerAndAction, $requestMethod = 'GET')
     {
         if (!isset($controllerAndAction['controller'], $controllerAndAction['action'])) {
             throw new RouterException('Indicate a controller and an action to the route');
@@ -40,7 +40,6 @@ class Route
         $controllerR = $this->defineProperty('controller', $controller);
         $actionR = $this->defineProperty('action', $action);
 
-        $params = (is_array($params)) ? $params : explode('/', $params);
         $this->route = array(
             'name' => $name,
             'params' => $params,

@@ -80,6 +80,7 @@ class RoutingHandler
 
                 $cController = $controllerData['controller_t'];
                 $cAction = $actionData['action_t'];
+                
                 $paramsSetted = array($controllerData['controller_r'] => $controllerData['controller_t']) == $route->getController() 
                                 && array($actionData['action_r'] => $actionData['action_t']) == $route->getAction() 
                                 && strtolower($requestMethod) == strtolower($route->getRequestMethod()) 
@@ -122,6 +123,7 @@ class RoutingHandler
     */
     private function detectParams(array $params, array $routeParams)
     {
+        print_r($params);
         if (count($params) > 2) {
             unset($params[0], $params[1]);
 
